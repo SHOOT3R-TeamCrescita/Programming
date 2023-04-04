@@ -14,6 +14,7 @@ public class EnemyDefault : MonoBehaviour
     public LayerMask targetPlayer;  //플레이어 레이어
     public LayerMask obstacleMask;  //장애물 레이어
 
+    //스테이터스
     public enum CurrentState {Idle, Trace1, Trace2, Attack, Damaged}
     public CurrentState curState = CurrentState.Idle;
 
@@ -24,10 +25,8 @@ public class EnemyDefault : MonoBehaviour
     private int randdirec;
     private Vector3 moveDirection;
 
-    public bool isCheck = true;
-    bool isRota = false;
-
-    public float elaspedTime = 0f;
+    public bool isCheck = true;  //IdleMove 판별
+    bool isRota = false;  //회전 판별
 
     Vector3 targetDirection;
 
@@ -65,6 +64,7 @@ public class EnemyDefault : MonoBehaviour
     }
 
     
+    //스테이트에 따른 적 행동 변화
     private IEnumerator CheckState(float waitTime)
     {
         while (true)
@@ -81,7 +81,7 @@ public class EnemyDefault : MonoBehaviour
                 nav.isStopped = false;
                 Debug.Log("어딨어?");
                 nav.SetDestination(target.position);
-                nav.speed = 15;
+                nav.speed = 20;
             }
             else if (curState == CurrentState.Trace2)
             {
@@ -89,7 +89,7 @@ public class EnemyDefault : MonoBehaviour
                 nav.isStopped = false;
                 Debug.Log("본 거 같은데");
                 nav.SetDestination(target.position);
-                nav.speed = 10;
+                nav.speed = 15;
             }
 
             else if (curState == CurrentState.Attack)
@@ -102,7 +102,7 @@ public class EnemyDefault : MonoBehaviour
                     {
                         nav.isStopped = true;
                         Debug.Log("찾았다!");
-                        //isRota = true;
+                        isRota = true;
                     }
                     else
                     {
@@ -121,7 +121,7 @@ public class EnemyDefault : MonoBehaviour
             {
                 Debug.Log("아야!!");
                 isCheck = false;
-                nav.speed = 40;
+                nav.speed = 50;
                 if (dist < 30)
                     curState = CurrentState.Attack;
             }
@@ -130,6 +130,7 @@ public class EnemyDefault : MonoBehaviour
         }
     }
 
+    //적이 플레이어를 바라보게끔 회전.
     void Rotation()
     {
         targetDirection = target.position - transform.position;
@@ -145,16 +146,6 @@ public class EnemyDefault : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
             IdleCheck();
-        }
-    }
-
-    private IEnumerator DelayMove(float waitTime)
-    {
-        while (!isCheck)
-        {
-            IdleMove();
-            yield return new WaitForSeconds(waitTime);
-            isCheck = true;
         }
     }
 
@@ -230,6 +221,7 @@ public class EnemyDefault : MonoBehaviour
          return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
      }
 
+    //stateCheck 딜레이 함수.
     private IEnumerator ChangeState(float waitTime)
     {
         while (true)
@@ -239,30 +231,42 @@ public class EnemyDefault : MonoBehaviour
         }
     }
 
+
+    //일정 시간마다 적의 스테이터스 판정.
     void stateCheck()
     {
-        int stateRand = Random.Range(0, 101);
-
-        //if (curState != CurrentState.Damaged)
-        //{
-            if (dist < 30)
-                curState = CurrentState.Attack;
-            else if (dist > 30 && dist < 100)
+        //거리에 따라 이동 확률 증가를 위한 변수들
+        float probability = Mathf.Clamp(dist / 300, 0.1f, 0.9f);
+        float stateRand = Random.Range(0.1f,1f);
+            
+        if (dist < 30)
+            curState = CurrentState.Attack;
+        else if (dist > 30 && dist < 100)
+        {
+            if (stateRand < probability)
             {
-                if (stateRand > 51)
+                if(curState != CurrentState.Damaged)
                     curState = CurrentState.Idle;
                 else
                     curState = CurrentState.Trace2;
             }
+            else
+                curState = CurrentState.Trace2;
+        }
 
-            else if (dist > 100)
+        else if (dist > 100)
+        {
+            if(stateRand < probability)
             {
-                if (stateRand > 71)
+                if (curState != CurrentState.Damaged)
                     curState = CurrentState.Idle;
                 else
                     curState = CurrentState.Trace1;
             }
-        //}
+            else
+                curState = CurrentState.Trace1;
+        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -14,6 +14,8 @@ public class bullet : MonoBehaviour
     void Start()
     {
         bulletS.velocity = transform.forward * 200f + transform.up * 10f;
+
+        //bulletS.AddForce(Vector3.forward * 20f,ForceMode.Impulse);
         ColorChange();
     }
 

@@ -33,10 +33,12 @@ public class playerMove : MonoBehaviour
 
     //이중 점프 막기
     public bool isJump = false;
+    public bool isDash = true;
 
 
     //오브젝트
     Rigidbody rigid;
+    public GameObject model;
 
     void Start()
     {
@@ -79,11 +81,13 @@ public class playerMove : MonoBehaviour
             {
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
+                //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
             }
             else 
             {
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
+                //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
 
                 shootTimer = 0f;
             }
@@ -117,6 +121,14 @@ public class playerMove : MonoBehaviour
             isJump = true;
             rigid.AddForce(new Vector3(0, jumpPower*100, 0), ForceMode.Force);
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isDash)
+        {
+            rigid.AddForce(orientation.forward * 2000f, ForceMode.Impulse);
+            isDash = false;
+            StartCoroutine(Dash(5f));
+        }
+
     }
 
     //이중 점프 막기 판정
@@ -126,4 +138,13 @@ public class playerMove : MonoBehaviour
             isJump = false;
     }
 
+    private IEnumerator Dash(float WaitTime)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(WaitTime);
+            isDash = true;
+            Debug.Log("대쉬 가능!");
+        }
+    }
 }

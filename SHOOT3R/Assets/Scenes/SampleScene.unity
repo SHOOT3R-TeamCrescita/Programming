@@ -585,7 +585,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248352834}
-  m_LocalRotation: {x: -0.023195766, y: 0.000000020910775, z: -0.0000000015103314, w: 0.999731}
+  m_LocalRotation: {x: -0.023195764, y: -0.000000013579616, z: 9.808208e-10, w: 0.999731}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1107,7 +1107,6 @@ MonoBehaviour:
     m_Bits: 512
   curState: 0
   isCheck: 1
-  elaspedTime: 0
 --- !u!195 &446311323
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1473,7 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimColliderLayerMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 887
   debugTransform: {fileID: 392996090}
   speed: 70
   maxspeed: 50
@@ -1485,6 +1484,8 @@ MonoBehaviour:
   shootDelay: 0.3
   shootTimer: 0
   isJump: 0
+  isDash: 1
+  model: {fileID: 916562667}
 --- !u!54 &604809082
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1511,7 +1512,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.03, y: 7.57, z: -6.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1465295213}
   - {fileID: 916562668}
@@ -1588,7 +1589,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637972062}
-  m_LocalRotation: {x: 0.023296334, y: 0.00000002078464, z: -0.0000000024766502, w: 0.9997286}
+  m_LocalRotation: {x: 0.023296349, y: -0.000000013386389, z: 0.0000000015950921, w: 0.9997286}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1837,7 +1838,6 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
-  elaspedTime: 0
 --- !u!54 &725971260
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1907,7 +1907,6 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
-  elaspedTime: 0
 --- !u!195 &761944299
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2225,7 +2224,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.023296418, y: 0.00000003440342, z: 8.0169404e-10, w: 0.9997286}
+  m_LocalRotation: {x: -0.023296418, y: 0.000000034403424, z: 8.0169416e-10, w: 0.9997286}
   m_LocalPosition: {x: 16.03, y: 8.57, z: -13.280001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2766,7 +2765,6 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
-  elaspedTime: 0
 --- !u!195 &1069085583
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2963,6 +2961,8 @@ MonoBehaviour:
   shootDelay: 0.3
   shootTimer: 0
   isJump: 0
+  isDash: 0
+  model: {fileID: 0}
 --- !u!54 &1129807816
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3459,10 +3459,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 441624598}
   - {fileID: 1192191307}
+  - {fileID: 441624598}
   m_Father: {fileID: 604809083}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3557,8 +3557,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192191306}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0.79999995}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1169619274}
@@ -5234,7 +5234,6 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
-  elaspedTime: 0
 --- !u!195 &1528521670
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6263,7 +6262,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838314021}
-  m_LocalRotation: {x: -0.070889056, y: 0.000000020925466, z: -5.096673e-10, w: 0.9974842}
+  m_LocalRotation: {x: -0.070889056, y: 0.000000020925468, z: -5.096674e-10, w: 0.9974842}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6449,7 +6448,6 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
-  elaspedTime: 0
 --- !u!195 &1899957339
 NavMeshAgent:
   m_ObjectHideFlags: 0
