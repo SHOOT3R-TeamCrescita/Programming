@@ -13,7 +13,7 @@ public class bullet : MonoBehaviour
 
     void Start()
     {
-        bulletS.velocity = transform.forward * 100f + transform.up * 20f;
+        bulletS.velocity = transform.forward * 200f + transform.up * 10f;
         ColorChange();
     }
 
@@ -26,7 +26,7 @@ public class bullet : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
-            Destroy(gameObject);
+            StartCoroutine("Timer");
     }
 
     void ColorChange()
@@ -40,7 +40,20 @@ public class bullet : MonoBehaviour
 
         if (NoteCreater.isLong == true)
             bulletS.GetComponent<Renderer>().material.color = Color.cyan;
+    }
 
+    private IEnumerator Timer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2f);
+            OnDestroy();
+        }
 
+    }
+
+    void OnDestroy()
+    {
+        Destroy(gameObject);
     }
 }
