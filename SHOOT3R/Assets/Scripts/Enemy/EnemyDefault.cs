@@ -4,97 +4,192 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyDefault : MonoBehaviour
 {
-    public Transform target;
+    public Transform target;  //플레이어의 좌표
     //public GameObject player;
 
-    public float dist;
-    public float radius;
-    public float angle;
+    public float dist;   //플레이어와의 거리
+    public float radius;  //탐지 범위
+    public float angle;  //탐지 각도
 
-    public LayerMask targetPlayer;
-    public LayerMask obstacleMask;
+    public LayerMask targetPlayer;  //플레이어 레이어
+    public LayerMask obstacleMask;  //장애물 레이어
+
+    public enum CurrentState {Idle, Trace1, Trace2, Attack, Damaged}
+    public CurrentState curState = CurrentState.Idle;
+
 
     Rigidbody enemy;
-    BoxCollider boxCollider;
     NavMeshAgent nav;
 
+    private int randdirec;
+    private Vector3 moveDirection;
 
+    public bool isCheck = true;
+    bool isRota = false;
+
+    public float elaspedTime = 0f;
+
+    Vector3 targetDirection;
 
     void Awake()
     {
         enemy = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
         nav = GetComponent<NavMeshAgent>();
     }
 
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        StartCoroutine(Delay(2.0f));
+        StartCoroutine(CheckState(0.25f));
+        StartCoroutine(ChangeState(2f));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
         dist = Vector3.Distance(target.position, transform.position);
-
-        CheckDist();
-        //Find();
-        //if (CanSee(target))
-           // Debug.Log("found you!");
+        IdleMove();
+        nav.SetDestination(target.position);
     }
 
     void FixedUpdate()
     {
         FreezeVelocity();
+        Rotation(); 
     }
 
+    //마찰 버그 수정
     void FreezeVelocity()
     {
         enemy.velocity = Vector3.zero;
         enemy.angularVelocity = Vector3.zero;
     }
 
-    void CheckDist()
+    
+    private IEnumerator CheckState(float waitTime)
     {
-        nav.speed = 25;
-        nav.SetDestination(target.position);
-        if (dist < 20)
+        while (true)
         {
-            
-            if(CanSee(target))
+            if (curState == CurrentState.Idle)
             {
-                Debug.Log("found you!");
+                isCheck = true;
+                nav.isStopped = true;
             }
-            else
+
+            else if (curState == CurrentState.Trace1)
             {
-                Debug.Log("where?");
-                //transform.Rotate(Vector3.up * Time.deltaTime * 300);
-                nav.speed = 1;
+                isCheck = false;
+                nav.isStopped = false;
+                Debug.Log("어딨어?");
+                nav.SetDestination(target.position);
+                nav.speed = 15;
+            }
+            else if (curState == CurrentState.Trace2)
+            {
+                isCheck = false;
+                nav.isStopped = false;
+                Debug.Log("본 거 같은데");
+                nav.SetDestination(target.position);
+                nav.speed = 10;
+            }
+
+            else if (curState == CurrentState.Attack)
+            {
+                isCheck = false;
+                if (dist < 30)
+                {
+                    nav.SetDestination(target.position);
+                    if (CanSee(target))
+                    {
+                        nav.isStopped = true;
+                        Debug.Log("찾았다!");
+                        //isRota = true;
+                    }
+                    else
+                    {
+                        nav.isStopped = false;
+                        Debug.Log("근처에 있는데");
+                        nav.speed = 1;
+                        isRota = false;
+                    }
+                }
+            }
+
+            if ( dist < 30 )
+                curState = CurrentState.Attack;
+
+            else if (curState == CurrentState.Damaged)
+            {
+                Debug.Log("아야!!");
+                isCheck = false;
+                nav.speed = 40;
+                if (dist < 30)
+                    curState = CurrentState.Attack;
+            }
+
+            yield return new WaitForSeconds(waitTime);
+        }
+    }
+
+    void Rotation()
+    {
+        targetDirection = target.position - transform.position;
+        if (isRota)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 150f);
+        }
+    }
+    private IEnumerator Delay(float waitTime)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(waitTime);
+            IdleCheck();
+        }
+    }
+
+    private IEnumerator DelayMove(float waitTime)
+    {
+        while (!isCheck)
+        {
+            IdleMove();
+            yield return new WaitForSeconds(waitTime);
+            isCheck = true;
+        }
+    }
+
+    //무작위 이동 방향 결정
+    void IdleCheck()
+    {
+        //Debug.Log("작동");
+        randdirec = Random.Range(0, 3);
+        
+        float x = Random.Range(-1f, 1f);
+        float z = Random.Range(-1f, 1f);
+
+        if (randdirec == 2)
+            moveDirection = new Vector3(x, 0f, z);
+        else
+            moveDirection = Vector3.zero;
+    }
+
+    //무작위 이동
+    void IdleMove()
+    {
+        if (isCheck && curState != CurrentState.Damaged)
+        {
+            Debug.Log("우쒸");
+            enemy.AddForce(moveDirection * 2000f * Time.deltaTime, ForceMode.Impulse);
+            if (moveDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 150f * Time.deltaTime);
             }
         }
     }
 
-    /* void Find()
-     {
-         Vector3 playerTarget = (player.transform.position - transform.position).normalized;
-
-         Debug.DrawRay(transform.position, playerTarget * dist, Color.red);
-
-         if ( Vector3.Angle(transform.forward, playerTarget) < viewAngle / 2)
-         {
-             //float distanceToTarget = Vector3.Distance(transform.position, player.transform.position);
-             if(dist <= viewRadius)
-             {
-                 if(Physics.Raycast(transform.position, playerTarget, dist, obstacleMask) == false)
-                 {
-                     Debug.Log("found you!");
-                 }
-             }
-         }
-     }*/
-
-     bool CanSee(Transform target)
+    //탐지 범위(부채꼴) 판별
+     public bool CanSee(Transform target)
      {
          if (Vector3.Distance(transform.position, target.position) < radius )
          {
@@ -111,6 +206,7 @@ public class EnemyDefault : MonoBehaviour
          return false;
      }
 
+     //Scene뷰에서 탐지 범위 표시(전체범위)
      void OnDrawGizmosSelected()
      {
          Gizmos.color = Color.yellow;
@@ -123,7 +219,7 @@ public class EnemyDefault : MonoBehaviour
          Gizmos.DrawLine(transform.position, transform.position + leftBoundary * radius);
          Gizmos.DrawLine(transform.position, transform.position + rightBoundary * radius);
      }
-
+    //Scene뷰에서 탐지 범위 표시(탐지범위)
      public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
      {
          if (!angleIsGlobal)
@@ -133,4 +229,50 @@ public class EnemyDefault : MonoBehaviour
 
          return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0f, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
      }
+
+    private IEnumerator ChangeState(float waitTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(waitTime);
+            stateCheck();
+        }
+    }
+
+    void stateCheck()
+    {
+        int stateRand = Random.Range(0, 101);
+
+        //if (curState != CurrentState.Damaged)
+        //{
+            if (dist < 30)
+                curState = CurrentState.Attack;
+            else if (dist > 30 && dist < 100)
+            {
+                if (stateRand > 51)
+                    curState = CurrentState.Idle;
+                else
+                    curState = CurrentState.Trace2;
+            }
+
+            else if (dist > 100)
+            {
+                if (stateRand > 71)
+                    curState = CurrentState.Idle;
+                else
+                    curState = CurrentState.Trace1;
+            }
+        //}
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == 8)
+        {
+            curState = CurrentState.Damaged;
+            isCheck = false;
+            nav.isStopped = false;
+            //nav.SetDestination(target.position);
+        }
+    }
 }
