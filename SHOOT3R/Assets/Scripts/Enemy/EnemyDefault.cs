@@ -27,6 +27,7 @@ public class EnemyDefault : MonoBehaviour
 
     public bool isCheck = true;  //IdleMove 판별
     bool isRota = false;  //회전 판별
+    public bool isAttack = false; //공격중인지 판별
 
     Vector3 targetDirection;
 
@@ -65,9 +66,9 @@ public class EnemyDefault : MonoBehaviour
 
     
     //스테이트에 따른 적 행동 변화
-    private IEnumerator CheckState(float waitTime)
+    public IEnumerator CheckState(float waitTime)
     {
-        while (true)
+        while (!isAttack)
         {
             if (curState == CurrentState.Idle)
             {
@@ -95,14 +96,18 @@ public class EnemyDefault : MonoBehaviour
             else if (curState == CurrentState.Attack)
             {
                 isCheck = false;
+
                 if (dist < 30)
                 {
                     nav.SetDestination(target.position);
+                    
                     if (CanSee(target))
                     {
                         nav.isStopped = true;
                         Debug.Log("찾았다!");
                         isRota = true;
+                        isAttack = true;
+                        StartCoroutine(BossAttack());
                     }
                     else
                     {
@@ -113,9 +118,10 @@ public class EnemyDefault : MonoBehaviour
                     }
                 }
             }
-
-            if ( dist < 30 )
+            if (dist < 30)
+            {
                 curState = CurrentState.Attack;
+            }
 
             else if (curState == CurrentState.Damaged)
             {
@@ -222,7 +228,7 @@ public class EnemyDefault : MonoBehaviour
      }
 
     //stateCheck 딜레이 함수.
-    private IEnumerator ChangeState(float waitTime)
+    public IEnumerator ChangeState(float waitTime)
     {
         while (true)
         {
@@ -271,12 +277,26 @@ public class EnemyDefault : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == 8)
+        if(collision.gameObject.layer == 8 && curState != CurrentState.Attack)
         {
             curState = CurrentState.Damaged;
             isCheck = false;
             nav.isStopped = false;
             //nav.SetDestination(target.position);
         }
+    }
+
+    protected virtual IEnumerator BossAttack()
+    {
+        while (true)
+        {
+            Debug.Log("얍!!!");
+            yield return null;
+        }
+    }
+
+    void Attack()
+    {
+
     }
 }

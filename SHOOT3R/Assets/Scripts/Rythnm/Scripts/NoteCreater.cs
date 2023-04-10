@@ -7,7 +7,7 @@ public class NoteCreater : MonoBehaviour
     public int bpm = 0;
     double currentTime = 0d;
 
-    public int noteCount = 1;
+    public int noteCount = 0;
     public static int noteClick = 0;
     public static bool isLong = false;
 
@@ -27,25 +27,37 @@ public class NoteCreater : MonoBehaviour
 
         if(currentTime >= 30d/bpm)
         {
-            /*GameObject t_note = Instantiate(note, spawn.position, Quaternion.identity);
-            t_note.transform.SetParent(this.transform);
-            currentTime -= 30d / bpm;
-            noteCount++;*/
-
-            if (/*(noteCount-2)%4==0 && noteCount!=0 || noteCount == 1 || noteCount ==2*/noteCount%2==0 || (noteCount>=441&&noteCount<=444) )
+            /*
+            if(noteCount%4 != 0 && noteCount <= 60)
             {
                 currentTime -= 30d / bpm;
                 noteCount++;
             }
-            else if((noteCount >= 10 && noteCount <= 60) || (noteCount>=300 && noteCount <= 360))
+            else 
+            {
+                GameObject t_note = Instantiate(note, spawn.position, Quaternion.identity);
+                t_note.transform.SetParent(this.transform);
+                currentTime -= 30d / bpm;
+                noteCount++;
+            }
+           */
+            
+            if (noteCount % 4 != 1 || (noteCount >= 440 && noteCount <= 445))
+            {
+                currentTime -= 30d / bpm;
+                noteCount++;
+            }
+            else if ((noteCount >= 10 && noteCount <= 60) || (noteCount >= 300 && noteCount <= 360))
             {
                 longNote.SetActive(true);
                 isLong = true;
+                currentTime -= 30d / bpm;
                 noteCount++;
             }
             else if(noteCount > 445)
             {
-                noteCount = 1;
+                currentTime -= 30d / bpm;
+                noteCount = 0;
                 music.Play();
             }
             else
@@ -57,7 +69,6 @@ public class NoteCreater : MonoBehaviour
                 currentTime -= 30d / bpm;
                 noteCount++;
             }
-            
         }
     }
 }

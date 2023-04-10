@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446311320}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf9e1fa7269e36642adc7480b89bbff6, type: 3}
   m_Name: 
@@ -1107,6 +1107,7 @@ MonoBehaviour:
     m_Bits: 512
   curState: 0
   isCheck: 1
+  isAttack: 0
 --- !u!195 &446311323
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1215,6 +1216,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &446311351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446311320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e85015b265c47245b5f0fd590d621c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 604809083}
+  dist: 0
+  radius: 30
+  angle: 90
+  targetPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  curState: 0
+  isCheck: 1
+  isAttack: 0
+  weapon: {fileID: 2948497741629688631, guid: 051fa821f2d768c41aa490b06eff68a1, type: 3}
 --- !u!1 &595583234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,7 +1616,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637972062}
-  m_LocalRotation: {x: 0.023296349, y: -0.000000013386389, z: 0.0000000015950921, w: 0.9997286}
+  m_LocalRotation: {x: 0.023296349, y: 0.000000020784638, z: -0.0000000024766504, w: 0.9997286}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1649,7 +1676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c391443acb3b34e986844b48f0489e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 446311322}
+  enemy: {fileID: 446311351}
   status: {fileID: 672751020}
 --- !u!114 &672751020
 MonoBehaviour:
@@ -1838,6 +1865,7 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
+  isAttack: 0
 --- !u!54 &725971260
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1907,6 +1935,7 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
+  isAttack: 0
 --- !u!195 &761944299
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2224,7 +2253,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.023296418, y: 0.000000034403424, z: 8.0169416e-10, w: 0.9997286}
+  m_LocalRotation: {x: -0.023296418, y: -0.00000003440342, z: -8.0169404e-10, w: 0.9997286}
   m_LocalPosition: {x: 16.03, y: 8.57, z: -13.280001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2486,7 +2515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1015861252
 Transform:
   m_ObjectHideFlags: 0
@@ -2765,6 +2794,7 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
+  isAttack: 0
 --- !u!195 &1069085583
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3300,7 +3330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 127
-  noteCount: 1
+  noteCount: 0
   spawn: {fileID: 2089733777}
   note: {fileID: 8504084734361538226, guid: 899da6decc3ac3541aa910f5e28a9f0f, type: 3}
   longNote: {fileID: 1352388603}
@@ -5234,6 +5264,7 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
+  isAttack: 0
 --- !u!195 &1528521670
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6262,7 +6293,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838314021}
-  m_LocalRotation: {x: -0.070889056, y: 0.000000020925468, z: -5.096674e-10, w: 0.9974842}
+  m_LocalRotation: {x: -0.070889056, y: -0.000000013477092, z: 3.2825237e-10, w: 0.9974842}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6448,6 +6479,7 @@ MonoBehaviour:
     m_Bits: 0
   curState: 0
   isCheck: 1
+  isAttack: 0
 --- !u!195 &1899957339
 NavMeshAgent:
   m_ObjectHideFlags: 0

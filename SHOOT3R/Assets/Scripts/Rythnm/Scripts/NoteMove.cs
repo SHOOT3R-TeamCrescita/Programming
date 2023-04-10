@@ -27,7 +27,7 @@ public class NoteMove : MonoBehaviour
         {
             isColor = true;
             NoteCreater.noteClick++;
-            Debug.Log(NoteCreater.noteClick);
+            //Debug.Log(NoteCreater.noteClick);
             Destroy(gameObject);
         }
         transform.position += direction * 510f * Time.deltaTime;
