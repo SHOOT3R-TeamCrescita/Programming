@@ -11,6 +11,15 @@ public class EnemyDefault : MonoBehaviour
     public float radius;  //탐지 범위
     public float angle;  //탐지 각도
 
+    //사거리 변수들
+    public int attackrange;
+    public int outrange;
+
+    //속도
+    public int defSpeed;
+    public int tracSpeed;
+    public int damSpeed;
+
     public LayerMask targetPlayer;  //플레이어 레이어
     public LayerMask obstacleMask;  //장애물 레이어
 
@@ -20,7 +29,8 @@ public class EnemyDefault : MonoBehaviour
 
 
     Rigidbody enemy;
-    NavMeshAgent nav;
+    protected NavMeshAgent nav;
+    public Animator bossanim;
 
     private int randdirec;
     private Vector3 moveDirection;
@@ -29,18 +39,19 @@ public class EnemyDefault : MonoBehaviour
     bool isRota = false;  //회전 판별
     public bool isAttack = false; //공격중인지 판별
 
-    Vector3 targetDirection;
+    protected Vector3 targetDirection;
 
     void Awake()
     {
         enemy = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
+        bossanim = GetComponent<Animator>();
     }
 
     void Start()
     {
         StartCoroutine(Delay(2.0f));
-        StartCoroutine(CheckState(0.25f));
+        StartCoroutine(CheckState(0.1f));
         StartCoroutine(ChangeState(2f));
     }
 
@@ -49,12 +60,15 @@ public class EnemyDefault : MonoBehaviour
         dist = Vector3.Distance(target.position, transform.position);
         IdleMove();
         nav.SetDestination(target.position);
+
+        Debug.Log(nav.speed);
     }
 
     void FixedUpdate()
     {
         FreezeVelocity();
-        Rotation(); 
+        Rotation();
+        Animation();
     }
 
     //마찰 버그 수정
@@ -70,67 +84,69 @@ public class EnemyDefault : MonoBehaviour
     {
         while (!isAttack)
         {
-            if (curState == CurrentState.Idle)
+            if (curState == CurrentState.Damaged && dist < attackrange)
             {
-                isCheck = true;
+                curState = CurrentState.Attack;
                 nav.isStopped = true;
             }
 
-            else if (curState == CurrentState.Trace1)
+            else
             {
-                isCheck = false;
-                nav.isStopped = false;
-                Debug.Log("어딨어?");
-                nav.SetDestination(target.position);
-                nav.speed = 20;
-            }
-            else if (curState == CurrentState.Trace2)
-            {
-                isCheck = false;
-                nav.isStopped = false;
-                Debug.Log("본 거 같은데");
-                nav.SetDestination(target.position);
-                nav.speed = 15;
-            }
-
-            else if (curState == CurrentState.Attack)
-            {
-                isCheck = false;
-
-                if (dist < 30)
+                if (curState == CurrentState.Idle)
                 {
+                    isCheck = true;
+                    nav.isStopped = true;
+                }
+
+                else if (curState == CurrentState.Trace1)
+                {
+                    isCheck = false;
+                    nav.isStopped = false;
+                    Debug.Log("어딨어?");
                     nav.SetDestination(target.position);
-                    
-                    if (CanSee(target))
+                    nav.speed = tracSpeed;
+                }
+                else if (curState == CurrentState.Trace2)
+                {
+                    isCheck = false;
+                    nav.isStopped = false;
+                    Debug.Log("본 거 같은데");
+                    nav.SetDestination(target.position);
+                    nav.speed = defSpeed;
+                }
+
+                else if (curState == CurrentState.Attack)
+                {
+                    isCheck = false;
+
+                    if (dist < attackrange)
                     {
-                        nav.isStopped = true;
-                        Debug.Log("찾았다!");
-                        isRota = true;
-                        isAttack = true;
-                        StartCoroutine(BossAttack());
-                    }
-                    else
-                    {
-                        nav.isStopped = false;
-                        Debug.Log("근처에 있는데");
-                        nav.speed = 1;
-                        isRota = false;
+                        nav.SetDestination(target.position);
+
+                        if (CanSee(target))
+                        {
+                            nav.isStopped = true;
+                            Debug.Log("찾았다!");
+                            isRota = true;
+                            isAttack = true;
+                            StartCoroutine(BossAttack());
+                        }
+                        else
+                        {
+                            nav.isStopped = false;
+                            Debug.Log("근처에 있는데");
+                            nav.speed = 1;
+                            isRota = false;
+                        }
                     }
                 }
-            }
-            if (dist < 30)
-            {
-                curState = CurrentState.Attack;
-            }
-
-            else if (curState == CurrentState.Damaged)
-            {
-                Debug.Log("아야!!");
-                isCheck = false;
-                nav.speed = 50;
-                if (dist < 30)
+                if (dist < attackrange)
+                {
+                    nav.speed = 1; 
                     curState = CurrentState.Attack;
+                }
             }
+            
 
             yield return new WaitForSeconds(waitTime);
         }
@@ -244,46 +260,44 @@ public class EnemyDefault : MonoBehaviour
         //거리에 따라 이동 확률 증가를 위한 변수들
         float probability = Mathf.Clamp(dist / 300, 0.1f, 0.9f);
         float stateRand = Random.Range(0.1f,1f);
-            
-        if (dist < 30)
-            curState = CurrentState.Attack;
-        else if (dist > 30 && dist < 100)
+
+        if (curState != CurrentState.Damaged)
         {
-            if (stateRand < probability)
+            if (dist < attackrange)
+                curState = CurrentState.Attack;
+            else if (dist > attackrange && dist < outrange)
             {
-                if(curState != CurrentState.Damaged)
+                if (stateRand < probability)
                     curState = CurrentState.Idle;
                 else
                     curState = CurrentState.Trace2;
             }
-            else
-                curState = CurrentState.Trace2;
-        }
 
-        else if (dist > 100)
-        {
-            if(stateRand < probability)
+            else if (dist > outrange)
             {
-                if (curState != CurrentState.Damaged)
+                if (stateRand < probability)
                     curState = CurrentState.Idle;
                 else
                     curState = CurrentState.Trace1;
             }
-            else
-                curState = CurrentState.Trace1;
         }
-        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == 8 && curState != CurrentState.Attack)
-        {
-            curState = CurrentState.Damaged;
-            isCheck = false;
-            nav.isStopped = false;
-            //nav.SetDestination(target.position);
-        }
+        if (collision.gameObject.layer == 8)
+            if (dist > attackrange)
+            {
+                Debug.Log("쿠아아앙");
+                curState = CurrentState.Damaged;
+                isCheck = false;
+                nav.isStopped = false;
+                nav.speed = damSpeed;
+
+                bossanim.SetBool("isRun", true);
+                bossanim.SetBool("isIdle", false);
+                bossanim.SetBool("isWalk", false);
+            }
     }
 
     protected virtual IEnumerator BossAttack()
@@ -295,8 +309,31 @@ public class EnemyDefault : MonoBehaviour
         }
     }
 
-    void Attack()
+    void Animation()
     {
-
+        if ( curState == CurrentState.Damaged )
+        {
+            bossanim.SetBool("isRun", true);
+            bossanim.SetBool("isIdle", false);
+            bossanim.SetBool("isWalk", false);
+        }
+        else if (isCheck)
+        {
+            bossanim.SetBool("isRun", false);
+            bossanim.SetBool("isIdle", false);
+            bossanim.SetBool("isWalk", true);
+        }
+        else if ( nav.speed > 1 )
+        {
+            bossanim.SetBool("isRun", true);
+            bossanim.SetBool("isIdle", false);
+            bossanim.SetBool("isWalk", false);
+        }
+        else
+        {
+            bossanim.SetBool("isRun", false);
+            bossanim.SetBool("isIdle", true);
+            bossanim.SetBool("isWalk", false);
+        }
     }
 }

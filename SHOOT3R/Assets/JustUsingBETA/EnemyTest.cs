@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyTest : MonoBehaviour
 {
     public GameObject bulletS;
-    public static bool isDamage = false;
+    //public static bool isDamage = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,10 +25,10 @@ public class EnemyTest : MonoBehaviour
         {
             this.gameObject.GetComponent<Renderer>().material.color = new Color(1, 0.7f, 0.1f);
 
-            if (isDamage == true)
+            if (NoteMove.isDamage == true)
             {
                 this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-                isDamage = false;
+                NoteMove.isDamage = false;
             }
         }
                 

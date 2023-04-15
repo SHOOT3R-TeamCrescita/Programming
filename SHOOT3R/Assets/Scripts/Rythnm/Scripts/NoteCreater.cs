@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class NoteCreater : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class NoteCreater : MonoBehaviour
 
     public int noteCount = 0;
     public static int noteClick = 0;
+    public static int noteCombo = 0;
     public static bool isLong = false;
+    
+
+    public TextMeshProUGUI Combo;
 
     [SerializeField] Transform spawn = null;
     [SerializeField] GameObject note = null;
@@ -23,6 +28,8 @@ public class NoteCreater : MonoBehaviour
     }
     void Update()
     {
+        Combo.text = noteCombo.ToString();
+
         currentTime += Time.deltaTime;
 
         if(currentTime >= 30d/bpm)
@@ -42,19 +49,19 @@ public class NoteCreater : MonoBehaviour
             }
            */
             
-            if (noteCount % 4 != 1 || (noteCount >= 440 && noteCount <= 445))
+            if (noteCount % 2 != 0 || (noteCount >= 390 && noteCount <= 400))
             {
                 currentTime -= 30d / bpm;
                 noteCount++;
             }
-            else if ((noteCount >= 10 && noteCount <= 60) || (noteCount >= 300 && noteCount <= 360))
+            else if ((noteCount >= 100 && noteCount <= 160) || (noteCount >= 300 && noteCount <= 360))
             {
                 longNote.SetActive(true);
                 isLong = true;
                 currentTime -= 30d / bpm;
                 noteCount++;
             }
-            else if(noteCount > 445)
+            else if(noteCount > 400)
             {
                 currentTime -= 30d / bpm;
                 noteCount = 0;

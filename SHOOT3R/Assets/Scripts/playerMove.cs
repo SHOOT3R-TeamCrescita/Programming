@@ -16,6 +16,8 @@ public class playerMove : MonoBehaviour
     public float jumpPower; //점프력
     public float gravity; //중력 설정
 
+    public static int test;
+
     float h;
     float v;
 
@@ -35,6 +37,8 @@ public class playerMove : MonoBehaviour
     public bool isJump = false;
     public bool isDash = true;
 
+    //사운드
+    public SFX_Player SFXPlayer;
 
     //오브젝트
     Rigidbody rigid;
@@ -46,18 +50,24 @@ public class playerMove : MonoBehaviour
         rigid.freezeRotation = true;
 
         Physics.gravity = new Vector3(0, gravity, 0);
+
+        SFXPlayer.GetComponents<SFX_Player>();
+
+        //임시로 여기다 추가(에디터의 프레임 제한)
+        Time.captureFramerate = 60;
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
     void Update()
     {
-        SpawnBullet();
+        
         PlayerMove();
     }
 
     void FixedUpdate()
     {
-
+        SpawnBullet();
     }
 
     void SpawnBullet()
@@ -77,10 +87,17 @@ public class playerMove : MonoBehaviour
         //발사 코드
         if (Input.GetMouseButton(0)&&shootTimer > shootDelay)
         {
+            SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
+
+
             if (NoteCreater.isLong == true)
             {
+                NoteMove.isDamage = false;
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
+
+               // bullet bulletsc = bullet.GetComponent<bullet>();
+               // bulletsc.isColor = NoteMove.isColor;
                 //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
             }
             else 
@@ -88,6 +105,9 @@ public class playerMove : MonoBehaviour
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
                 //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
+
+               // bullet bulletsc = bullet.GetComponent<bullet>();
+                //bulletsc.isColor = NoteMove.isColor;
 
                 shootTimer = 0f;
             }
@@ -122,11 +142,17 @@ public class playerMove : MonoBehaviour
             rigid.AddForce(new Vector3(0, jumpPower*100, 0), ForceMode.Force);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isDash)
+        //대쉬
+        if (Input.GetKey(KeyCode.LeftShift) && isDash)
         {
-            rigid.AddForce(orientation.forward * 2000f, ForceMode.Impulse);
+            Debug.Log("대쉬 가능!");
+            SFXPlayer.SfxPlay(SFX_Player.Sfx.dash);
             isDash = false;
-            StartCoroutine(Dash(5f));
+            if (h == 0 && v == 0)
+                rigid.AddForce(orientation.forward * 6000f, ForceMode.Impulse);
+            else
+                rigid.AddForce(moveDirection.normalized * 6000f, ForceMode.Impulse);
+            StartCoroutine(Dash(5.0f));
         }
 
     }
@@ -140,11 +166,12 @@ public class playerMove : MonoBehaviour
 
     private IEnumerator Dash(float WaitTime)
     {
-        while(true)
+        isDash = false;
+        while(WaitTime > 0f)
         {
-            yield return new WaitForSeconds(WaitTime);
-            isDash = true;
-            Debug.Log("대쉬 가능!");
+            WaitTime -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
         }
+        isDash = true;
     }
 }

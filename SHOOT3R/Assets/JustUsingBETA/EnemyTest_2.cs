@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyTest_2 : MonoBehaviour
 {
     public GameObject bulletS;
-    public static bool isDamage = false;
+    //public static bool isDamage = false;
 
     //public AudioSource[] hit;
 

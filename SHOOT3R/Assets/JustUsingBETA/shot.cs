@@ -23,4 +23,23 @@ public class shot : MonoBehaviour
     {
         
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+            StartCoroutine("Timer");
+    }
+    private IEnumerator Timer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            OnDestroy();
+        }
+
+    }
+
+    void OnDestroy()
+    {
+        Destroy(gameObject);
+    }
 }

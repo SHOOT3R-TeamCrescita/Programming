@@ -5,6 +5,7 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
     Rigidbody bulletS;
+    public bool isColor;
 
     private void Awake()
     {
@@ -16,13 +17,14 @@ public class bullet : MonoBehaviour
         bulletS.velocity = transform.forward * 200f + transform.up * 10f;
 
         //bulletS.AddForce(Vector3.forward * 20f,ForceMode.Impulse);
+        isColor = NoteMove.isColor;
         ColorChange();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnCollisionEnter(Collision collision)
@@ -33,11 +35,13 @@ public class bullet : MonoBehaviour
 
     void ColorChange()
     {
-        if (NoteMove.isColor == true)
+        if (isColor == true)
         {
             bulletS.GetComponent<Renderer>().material.color = Color.blue;
-            NoteMove.isColor = false;
-            EnemyTest.isDamage = true;
+            isColor = false;
+            //EnemyTest.isDamage = true;
+            //BossHP.isDamage = true;
+            NoteMove.isDamage = true;
         }
 
         if (NoteCreater.isLong == true)
