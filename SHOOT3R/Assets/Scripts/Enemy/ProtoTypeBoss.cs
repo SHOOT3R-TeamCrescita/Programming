@@ -8,8 +8,10 @@ public class ProtoTypeBoss : EnemyDefault
     public GameObject misile;
     public Transform shootingpoint;
     public GameObject range;
-    
-   
+
+    [SerializeField]
+    AudioSource rocket;
+
     /*public override void BossAttack2()
     {
         int randatt = Random.Range(0, 4);
@@ -31,7 +33,7 @@ public class ProtoTypeBoss : EnemyDefault
                 case 1:
                     for (int i = 0; i < 60; i++)
                     {
-                        bossanim.SetInteger("Skill", 2);
+                        //bossanim.SetInteger("Skill", 2);
 
                         targetDirection = target.position - transform.position;
                         Instantiate(weapon, shootingpoint.position, Quaternion.LookRotation(targetDirection, Vector3.up));
@@ -40,8 +42,9 @@ public class ProtoTypeBoss : EnemyDefault
                 case 2:
                     for (int i = 0; i < 2; i++)
                     {
-                        bossanim.SetInteger("Skill", 3);
+                        //bossanim.SetInteger("Skill", 3);
 
+                        rocket.Play();
                         targetDirection = target.position - transform.position;
                         //Instantiate(misile, transform.position, Quaternion.LookRotation(targetDirection, Vector3.up)); 
                         GameObject misileA = Instantiate(misile, shootingpoint.position, Quaternion.LookRotation(targetDirection, Vector3.up));
@@ -51,7 +54,7 @@ public class ProtoTypeBoss : EnemyDefault
                     break;
                 case 3:
                     {
-                        bossanim.SetInteger("Skill", 1);
+                        //bossanim.SetInteger("Skill", 1);
 
                         range.SetActive(true);
                         nav.isStopped = false;

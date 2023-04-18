@@ -41,7 +41,7 @@ public class NoteMove : MonoBehaviour
             }
         }
     
-        transform.position += direction * 510f * Time.deltaTime;
+        transform.position += direction * 515f * Time.deltaTime;
 
     }
 

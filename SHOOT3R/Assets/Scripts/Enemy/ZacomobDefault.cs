@@ -13,25 +13,42 @@ public class ZacomobDefault : MonoBehaviour
     public int attackrange;
     public int outrange;
 
-    Rigidbody enemy;
-    NavMeshAgent nav;
+    public bool isAttack = false;
 
+    public bool isRota = false;
+
+    protected Rigidbody enemy;
+    protected NavMeshAgent nav;
+
+    public Animator anim;
+
+    float x;
 
     void Awake()
     {
         enemy = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
-    void Start()
-    {
-    }
 
     void Update()
     {
         dist = Vector3.Distance(target.position, transform.position);
         nav.SetDestination(target.position);
         CheckDist();
+
+        if (isRota)
+        {
+            x += Time.deltaTime * 50f;
+            transform.eulerAngles = Vector3.forward * x;
+        }
+        if (HP < 0)
+        {
+            StartCoroutine("Timer");
+        }
+
+
     }
 
     void FixedUpdate()
@@ -50,24 +67,29 @@ public class ZacomobDefault : MonoBehaviour
 
     void CheckDist()
     {
-        if ( dist < attackrange )
+        while (!isAttack)
         {
-            Debug.Log("°ø°Ý");
-        }
+            if (dist < attackrange)
+            {
+                isAttack = true;
+                StartCoroutine(Attack());
+                //Debug.Log("°ø°Ý");
+            }
 
-        else if ( dist >attackrange && dist < outrange)
-        {
-            nav.isStopped = false;
-            nav.speed = 15;
-            Debug.Log("Á×ÀÌÀÚ!");
-        }
+            else if (dist > attackrange && dist < outrange)
+            {
+                nav.isStopped = false;
+                nav.speed = 15;
+                //Debug.Log("Á×ÀÌÀÚ!");
+            }
 
-        else if  ( dist > outrange )
-        {
-            nav.isStopped = true;
-            Debug.Log("¹è°íÆÄ");
+            else if (dist > outrange)
+            {
+                nav.isStopped = true;
+                //Debug.Log("¹è°íÆÄ");
+            }
+            break;
         }
-
     }
 
 
@@ -80,19 +102,41 @@ public class ZacomobDefault : MonoBehaviour
             HP -= 10;
             if (NoteMove.isDamage == true)
             {
-                HP -= (30 * (1 + (NoteCreater.noteCombo / 100))); ;
-                NoteMove.isDamage = false;
+                Debug.Log("ÆÜ");
+                HP -= 30 * (1 + (NoteCreater.noteCombo / 100f));
+                //NoteMove.isDamage = false;
             }
             else if (NoteCreater.isLong == true)
             {
-                HP += 9f;
+                HP += 6f;
             }
         }
     }
 
-    void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        if(HP < 0)
+
+    }
+
+    private IEnumerator Timer()
+    {
+        while (true)
+        {
+            nav.speed = 0;
+            //nav.isStopped = true;
+            isAttack = true;
+            isRota = true;
+            yield return new WaitForSeconds(2f);
             Destroy(gameObject);
+        }
+    }
+
+    protected virtual IEnumerator Attack()
+    {
+        while (true)
+        {
+            Debug.Log("¾å!!!");
+            yield return null;
+        }
     }
 }

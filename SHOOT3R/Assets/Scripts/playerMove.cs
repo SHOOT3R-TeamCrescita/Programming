@@ -40,14 +40,21 @@ public class playerMove : MonoBehaviour
     //사운드
     public SFX_Player SFXPlayer;
 
+
     //오브젝트
     Rigidbody rigid;
     public GameObject model;
+
+    public GameObject Check;
+
+    public Animator anim;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         rigid.freezeRotation = true;
+
+        anim = transform.GetChild(0).GetComponent<Animator>();
 
         Physics.gravity = new Vector3(0, gravity, 0);
 
@@ -87,9 +94,7 @@ public class playerMove : MonoBehaviour
         //발사 코드
         if (Input.GetMouseButton(0)&&shootTimer > shootDelay)
         {
-            SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
-
-
+            anim.SetTrigger("isAtta");
             if (NoteCreater.isLong == true)
             {
                 NoteMove.isDamage = false;
@@ -102,6 +107,8 @@ public class playerMove : MonoBehaviour
             }
             else 
             {
+                SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
+
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
                 //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
@@ -124,6 +131,8 @@ public class playerMove : MonoBehaviour
         moveDirection = orientation.forward * v + orientation.right * h;
 
         rigid.AddForce(moveDirection.normalized * Time.deltaTime *1000 * speed, ForceMode.Force);
+        anim.SetBool("isWalk", moveDirection != Vector3.zero);
+
 
         //최대 속도 제한
         if (rigid.velocity.x > maxspeed)
@@ -138,6 +147,8 @@ public class playerMove : MonoBehaviour
         //점프
         if (Input.GetButtonDown("Jump") && !isJump)
         {
+            SFXPlayer.SfxPlay(SFX_Player.Sfx.jump);
+            anim.SetTrigger("isJump");
             isJump = true;
             rigid.AddForce(new Vector3(0, jumpPower*100, 0), ForceMode.Force);
         }
@@ -145,13 +156,14 @@ public class playerMove : MonoBehaviour
         //대쉬
         if (Input.GetKey(KeyCode.LeftShift) && isDash)
         {
-            Debug.Log("대쉬 가능!");
+            //Debug.Log("대쉬 가능!");
             SFXPlayer.SfxPlay(SFX_Player.Sfx.dash);
             isDash = false;
+            anim.SetTrigger("isDash");
             if (h == 0 && v == 0)
-                rigid.AddForce(orientation.forward * 6000f, ForceMode.Impulse);
+                rigid.AddForce(orientation.forward * 10000f, ForceMode.Impulse);
             else
-                rigid.AddForce(moveDirection.normalized * 6000f, ForceMode.Impulse);
+                rigid.AddForce(moveDirection.normalized * 10000f, ForceMode.Impulse);
             StartCoroutine(Dash(5.0f));
         }
 
@@ -161,7 +173,9 @@ public class playerMove : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 6)
+        {
             isJump = false;
+        }
     }
 
     private IEnumerator Dash(float WaitTime)

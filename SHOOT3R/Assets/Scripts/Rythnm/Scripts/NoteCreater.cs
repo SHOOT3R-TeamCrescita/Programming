@@ -49,7 +49,7 @@ public class NoteCreater : MonoBehaviour
             }
            */
             
-            if (noteCount % 2 != 0 || (noteCount >= 390 && noteCount <= 400))
+            if (noteCount % 2 != 1 || (noteCount >= 390 && noteCount <= 400))
             {
                 currentTime -= 30d / bpm;
                 noteCount++;

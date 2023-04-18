@@ -102,7 +102,7 @@ public class EnemyDefault : MonoBehaviour
                 {
                     isCheck = false;
                     nav.isStopped = false;
-                    Debug.Log("어딨어?");
+                    //Debug.Log("어딨어?");
                     nav.SetDestination(target.position);
                     nav.speed = tracSpeed;
                 }
@@ -110,7 +110,7 @@ public class EnemyDefault : MonoBehaviour
                 {
                     isCheck = false;
                     nav.isStopped = false;
-                    Debug.Log("본 거 같은데");
+                    //Debug.Log("본 거 같은데");
                     nav.SetDestination(target.position);
                     nav.speed = defSpeed;
                 }
@@ -126,7 +126,7 @@ public class EnemyDefault : MonoBehaviour
                         if (CanSee(target))
                         {
                             nav.isStopped = true;
-                            Debug.Log("찾았다!");
+                            //Debug.Log("찾았다!");
                             isRota = true;
                             isAttack = true;
                             StartCoroutine(BossAttack());
@@ -134,7 +134,7 @@ public class EnemyDefault : MonoBehaviour
                         else
                         {
                             nav.isStopped = false;
-                            Debug.Log("근처에 있는데");
+                            //Debug.Log("근처에 있는데");
                             nav.speed = 1;
                             isRota = false;
                         }
@@ -288,7 +288,7 @@ public class EnemyDefault : MonoBehaviour
         if (collision.gameObject.layer == 8)
             if (dist > attackrange)
             {
-                Debug.Log("쿠아아앙");
+                //Debug.Log("쿠아아앙");
                 curState = CurrentState.Damaged;
                 isCheck = false;
                 nav.isStopped = false;

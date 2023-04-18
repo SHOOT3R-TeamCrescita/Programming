@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class BossHP : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class BossHP : MonoBehaviour
     public static bool dotHP = false;
     //public static bool isDamage = false;
     public TextMeshProUGUI HP;
+    public Image health;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,8 @@ public class BossHP : MonoBehaviour
 
         if (dotHP)
             BShp += 0.2f;
+
+        health.fillAmount = BShp / 3000f;
 
     }
 

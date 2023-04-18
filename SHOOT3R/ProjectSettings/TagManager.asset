@@ -9,6 +9,9 @@ TagManager:
   - Visual
   - Check
   - Note
+  - Zaco
+  - DeathCheck
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -22,7 +25,7 @@ TagManager:
   - Wall
   - Enemy
   - Bullet
-  - 
+  - EnemyAttack
   - 
   - 
   - 

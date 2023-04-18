@@ -7,6 +7,11 @@ public class bullet : MonoBehaviour
     Rigidbody bulletS;
     public bool isColor;
 
+    [SerializeField]
+    GameObject effect;
+    [SerializeField]
+    GameObject effect1;
+
     private void Awake()
     {
         bulletS = GetComponent<Rigidbody>();
@@ -31,6 +36,16 @@ public class bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Wall")
             StartCoroutine("Timer");
+
+        if (collision.gameObject.tag == "Boss")
+        {
+            Instantiate(effect, transform.position, Quaternion.identity);
+        }
+
+        if (collision.gameObject.tag == "Zaco")
+        {
+            Instantiate(effect1, transform.position, Quaternion.identity);
+        }
     }
 
     void ColorChange()
