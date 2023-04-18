@@ -46,6 +46,7 @@ public class playerMove : MonoBehaviour
     public GameObject model;
 
     public GameObject Check;
+    public GameObject DashUI;
 
     public Animator anim;
 
@@ -150,7 +151,7 @@ public class playerMove : MonoBehaviour
             SFXPlayer.SfxPlay(SFX_Player.Sfx.jump);
             anim.SetTrigger("isJump");
             isJump = true;
-            rigid.AddForce(new Vector3(0, jumpPower*100, 0), ForceMode.Force);
+            rigid.AddForce(new Vector3(0, jumpPower*200, 0), ForceMode.Force);
         }
 
         //대쉬
@@ -159,12 +160,13 @@ public class playerMove : MonoBehaviour
             //Debug.Log("대쉬 가능!");
             SFXPlayer.SfxPlay(SFX_Player.Sfx.dash);
             isDash = false;
+            DashUI.SetActive(false);
             anim.SetTrigger("isDash");
             if (h == 0 && v == 0)
-                rigid.AddForce(orientation.forward * 10000f, ForceMode.Impulse);
+                rigid.AddForce(orientation.forward * 800f * 250f, ForceMode.Force);
             else
-                rigid.AddForce(moveDirection.normalized * 10000f, ForceMode.Impulse);
-            StartCoroutine(Dash(5.0f));
+                rigid.AddForce(moveDirection.normalized * 800f * 250f, ForceMode.Force);
+            StartCoroutine(Dash(2.5f));
         }
 
     }
@@ -187,5 +189,6 @@ public class playerMove : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         isDash = true;
+        DashUI.SetActive(true);
     }
 }

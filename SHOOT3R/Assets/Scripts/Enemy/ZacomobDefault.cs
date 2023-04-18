@@ -79,7 +79,7 @@ public class ZacomobDefault : MonoBehaviour
             else if (dist > attackrange && dist < outrange)
             {
                 nav.isStopped = false;
-                nav.speed = 15;
+                nav.speed = 10;
                 //Debug.Log("Á×ÀÌÀÚ!");
             }
 
@@ -98,7 +98,7 @@ public class ZacomobDefault : MonoBehaviour
         if (collision.gameObject.layer == 8)
         {
             nav.isStopped = false;
-            nav.speed = 15;
+            nav.speed = 10;
             HP -= 10;
             if (NoteMove.isDamage == true)
             {

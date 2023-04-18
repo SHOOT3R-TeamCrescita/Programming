@@ -33,6 +33,7 @@ public class Zaco3 : ZacomobDefault
 
         if (HP < 0 && isDie)
         {
+            anim.SetTrigger("IsDie");
             for (int i = 0; i < 4; i++)
             {
                 GameObject babyA = Instantiate(baby, transform.position, rotation);
