@@ -233,6 +233,7 @@ MonoBehaviour:
   attackrange: 15
   outrange: 50
   isAttack: 0
+  isRota: 0
   anim: {fileID: 0}
 --- !u!195 &2498388601956504396
 NavMeshAgent:
@@ -271,9 +272,10 @@ MonoBehaviour:
   target: {fileID: 0}
   dist: 0
   HP: 50
-  attackrange: 30
-  outrange: 40
+  attackrange: 20
+  outrange: 30
   isAttack: 0
+  isRota: 0
   anim: {fileID: 2498388601956504397}
   ball: {fileID: 16471065957205041, guid: de3665b640d16574fbfd820ea74e0903, type: 3}
 --- !u!1 &3856184748927067360

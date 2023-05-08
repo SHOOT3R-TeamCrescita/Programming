@@ -22,7 +22,7 @@ public class bullet : MonoBehaviour
         bulletS.velocity = transform.forward * 200f + transform.up * 10f;
 
         //bulletS.AddForce(Vector3.forward * 20f,ForceMode.Impulse);
-        isColor = NoteMove.isColor;
+        //isColor = NoteManager.isColor;
         ColorChange();
     }
 
@@ -50,17 +50,18 @@ public class bullet : MonoBehaviour
 
     void ColorChange()
     {
+        /*
         if (isColor == true)
         {
             bulletS.GetComponent<Renderer>().material.color = Color.blue;
             isColor = false;
             //EnemyTest.isDamage = true;
             //BossHP.isDamage = true;
-            NoteMove.isDamage = true;
-        }
+            NoteManager.isDamage = true;
+        }*/
 
-        if (NoteCreater.isLong == true)
-            bulletS.GetComponent<Renderer>().material.color = Color.cyan;
+        if (NoteManager.isLong == true)
+            bulletS.GetComponent<Renderer>().material.color = Color.yellow;
     }
 
     private IEnumerator Timer()

@@ -6,12 +6,9 @@ public class NoteMove : MonoBehaviour
 {
     private Vector3 direction;
 
-    public bool isCheck = false;
-    bool isDie = false;
-    public static bool isColor = false;
-    public static bool isDamage = false;
-
     public Animator anim;
+
+    //bool isClick;
 
     void Start()
     {
@@ -19,44 +16,27 @@ public class NoteMove : MonoBehaviour
 
         anim = GetComponent<Animator>();
 
+        //isClick = NoteManager.isClick;
     }
 
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (isCheck)
-            {
-                NoteCreater.noteClick++;
-                NoteCreater.noteCombo++;
-                isColor = true;
-
-                Destroy(gameObject);
-            }
-            else if (isDie)
-            {
-                isColor = false;
-                NoteCreater.noteCombo = 0;
-            }
-        }
-    
         transform.position += direction * 515f * Time.deltaTime;
-
+        if (Input.GetMouseButtonDown(0) && NoteManager.isCheck)
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Check"))
-            isCheck = true;
-        else if (collision.CompareTag("Destroy"))
+        if (collision.CompareTag("Destroy"))
         {
-            isColor = false;
+            //NoteManager.isColor = false;
             Destroy(gameObject);
-            NoteCreater.noteCombo = 0;
+            NoteManager.noteCombo--;
         }
         else if (collision.CompareTag("DeathCheck"))
-            isDie = true;
+            NoteManager.isDie = true;
             
 
         if (collision.CompareTag("Visual"))
@@ -65,14 +45,10 @@ public class NoteMove : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Check"))
-            isCheck = false;
-
         if (collision.CompareTag("Visual"))
             anim.SetBool("isStart", false);
 
         else if (collision.CompareTag("DeathCheck"))
-            isDie = false;
+            NoteManager.isDie = false;
     }
-
 }

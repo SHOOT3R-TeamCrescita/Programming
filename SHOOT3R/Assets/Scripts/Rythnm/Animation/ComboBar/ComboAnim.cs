@@ -15,7 +15,7 @@ public class ComboAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (NoteCreater.noteCombo != 0)
+        if (NoteManager.noteCombo != 0)
             anim.SetTrigger("isClick");
     }
 }

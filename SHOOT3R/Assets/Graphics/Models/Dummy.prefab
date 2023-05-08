@@ -5807,7 +5807,7 @@ MonoBehaviour:
   dist: 0
   HP: 100
   attackrange: 15
-  outrange: 50
+  outrange: 35
   isAttack: 0
   isRota: 0
   anim: {fileID: 0}

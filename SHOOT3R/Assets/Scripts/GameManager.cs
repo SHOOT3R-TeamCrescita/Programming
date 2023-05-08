@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
-        NoteCreater.noteCombo = 0;
+        NoteManager.noteCombo = 0;
     }
 
     // Update is called once per frame

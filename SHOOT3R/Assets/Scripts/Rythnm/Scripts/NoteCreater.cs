@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class NoteCreater : MonoBehaviour
 {
@@ -9,13 +8,7 @@ public class NoteCreater : MonoBehaviour
     double currentTime = 0d;
 
     public int noteCount = 0;
-    public static int noteClick = 0;
-    public static int noteCombo = 0;
-    public static bool isLong = false;
     
-
-    public TextMeshProUGUI Combo;
-
     [SerializeField] Transform spawn = null;
     [SerializeField] GameObject note = null;
 
@@ -28,8 +21,6 @@ public class NoteCreater : MonoBehaviour
     }
     void Update()
     {
-        Combo.text = noteCombo.ToString();
-
         currentTime += Time.deltaTime;
 
         if(currentTime >= 30d/bpm)
@@ -57,7 +48,7 @@ public class NoteCreater : MonoBehaviour
             else if ((noteCount >= 100 && noteCount <= 160) || (noteCount >= 300 && noteCount <= 360))
             {
                 longNote.SetActive(true);
-                isLong = true;
+                NoteManager.isLong = true;
                 currentTime -= 30d / bpm;
                 noteCount++;
             }
@@ -70,7 +61,7 @@ public class NoteCreater : MonoBehaviour
             else
             {
                 longNote.SetActive(false);
-                isLong = false;
+                NoteManager.isLong = false;
                 GameObject t_note = Instantiate(note, spawn.position, Quaternion.identity);
                 t_note.transform.SetParent(this.transform);
                 currentTime -= 30d / bpm;

@@ -34,13 +34,13 @@ public class BossHP : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            BShp -= 10;
-            if (NoteMove.isDamage == true)
-            {
-                BShp -= 30f *(1f + ((float)NoteCreater.noteCombo / 100f ));
-                NoteMove.isDamage = false;
-            }
-            else if (NoteCreater.isLong == true)
+            //BShp -= 10;
+            //if (NoteMove.isDamage == true)
+            //{
+                BShp -= 30f *(1f + ((float)NoteManager.noteCombo / 100f ));
+               // NoteManager.isDamage = false;
+            //}
+            if (NoteManager.isLong == true)
             {
                 BShp += 8f;
             }    

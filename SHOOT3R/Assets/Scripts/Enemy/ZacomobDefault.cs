@@ -100,13 +100,13 @@ public class ZacomobDefault : MonoBehaviour
             nav.isStopped = false;
             nav.speed = 10;
             HP -= 10;
-            if (NoteMove.isDamage == true)
-            {
-                Debug.Log("ÆÜ");
-                HP -= 30 * (1 + (NoteCreater.noteCombo / 100f));
+            //if (NoteMove.isDamage == true)
+            //{
+                //Debug.Log("ÆÜ");
+                HP -= 30 * (1 + (NoteManager.noteCombo / 100f));
                 //NoteMove.isDamage = false;
-            }
-            else if (NoteCreater.isLong == true)
+            //}
+            if (NoteManager.isLong == true)
             {
                 HP += 6f;
             }
@@ -135,7 +135,7 @@ public class ZacomobDefault : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("¾å!!!");
+            //Debug.Log("¾å!!!");
             yield return null;
         }
     }

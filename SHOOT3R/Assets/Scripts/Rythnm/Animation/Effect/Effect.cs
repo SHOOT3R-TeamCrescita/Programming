@@ -11,7 +11,7 @@ public class Effect : MonoBehaviour
     [SerializeField]
     Animator combobar;
 
-    public GameObject Check;
+    //public GameObject NM;
 
     public SFX_Player SFXPlayer;
 
@@ -26,13 +26,13 @@ public class Effect : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Check.GetComponent<Checker>().isCheck)
+            if (NoteManager.isCheck)
             {
                 effect.SetBool("isEffect", true);
                 combo.SetBool("isCombo", true);
                 combobar.SetBool("isCheck",true);
             }
-            else if (!Check.GetComponent<Checker>().isCheck || NoteCreater.noteCombo == 0)
+            else if (!NoteManager.isCheck || NoteManager.noteCombo == 0)
             {
                 combo.SetBool("isCombo", true);
             }

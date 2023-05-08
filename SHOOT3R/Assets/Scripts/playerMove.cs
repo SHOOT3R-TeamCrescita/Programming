@@ -69,13 +69,13 @@ public class playerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SpawnBullet();
         PlayerMove();
     }
 
     void FixedUpdate()
     {
-        SpawnBullet();
+
     }
 
     void SpawnBullet()
@@ -93,23 +93,14 @@ public class playerMove : MonoBehaviour
         }
 
         //발사 코드
-        if (Input.GetMouseButton(0)&&shootTimer > shootDelay)
+        if (Input.GetMouseButtonDown(0)&&shootTimer > shootDelay)
         {
             anim.SetTrigger("isAtta");
-            if (NoteCreater.isLong == true)
-            {
-                NoteMove.isDamage = false;
-                Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
-                Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
 
-               // bullet bulletsc = bullet.GetComponent<bullet>();
-               // bulletsc.isColor = NoteMove.isColor;
-                //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
-            }
-            else 
+            if (NoteManager.isCheck && !NoteManager.isLong)
             {
                 SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
-
+                Debug.Log("발사사사사사사사사사ㅏ사사사사사사사사사사사");
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
                 //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
@@ -118,6 +109,22 @@ public class playerMove : MonoBehaviour
                 //bulletsc.isColor = NoteMove.isColor;
 
                 shootTimer = 0f;
+            }
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            anim.SetTrigger("isAtta");
+
+            if (NoteManager.isLong)
+            {
+                //NoteManager.isDamage = false;
+                Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
+                Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
+
+                // bullet bulletsc = bullet.GetComponent<bullet>();
+                // bulletsc.isColor = NoteMove.isColor;
+                //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
             }
         }
         shootTimer += Time.deltaTime;

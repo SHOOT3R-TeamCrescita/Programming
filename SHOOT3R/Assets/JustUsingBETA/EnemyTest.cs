@@ -25,11 +25,11 @@ public class EnemyTest : MonoBehaviour
         {
             this.gameObject.GetComponent<Renderer>().material.color = new Color(1, 0.7f, 0.1f);
 
-            if (NoteMove.isDamage == true)
+            /*if (NoteManager.isDamage == true)
             {
                 this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-                NoteMove.isDamage = false;
-            }
+                NoteManager.isDamage = false;
+            }*/
         }
                 
     }

@@ -61,7 +61,7 @@ public class EnemyDefault : MonoBehaviour
         IdleMove();
         nav.SetDestination(target.position);
 
-        Debug.Log(nav.speed);
+        //Debug.Log(nav.speed);
     }
 
     void FixedUpdate()
@@ -191,7 +191,7 @@ public class EnemyDefault : MonoBehaviour
     {
         if (isCheck && curState != CurrentState.Damaged)
         {
-            Debug.Log("¿ì¾¯");
+            //Debug.Log("¿ì¾¯");
             enemy.AddForce(moveDirection * 2000f * Time.deltaTime, ForceMode.Impulse);
             if (moveDirection != Vector3.zero)
             {
