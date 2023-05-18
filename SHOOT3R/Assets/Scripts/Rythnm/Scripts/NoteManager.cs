@@ -6,7 +6,7 @@ using TMPro;
 public class NoteManager : MonoBehaviour
 {
     public static bool isCheck = false;
-    public static bool isDie = false;
+    //public static bool isDie = false;
     //public static bool isColor = false;
     //public static bool isDamage = false;
     public static int noteCombo = 0;
@@ -29,18 +29,18 @@ public class NoteManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (!isCheck)
-                noteCombo--;
+                noteCombo-=3;
                 //isClick = false;
             else if (isCheck)
                 noteCombo++;
                 //isClick = true;
                 //isColor = true;
-            else if (isDie)
+           // else if (isDie)
                 //isColor = false;
-                noteCombo--;
+               // noteCombo--;
         }
 
-        if (noteCombo < 0)
+        if (noteCombo <= 0)
             noteCombo = 0;
     }
 

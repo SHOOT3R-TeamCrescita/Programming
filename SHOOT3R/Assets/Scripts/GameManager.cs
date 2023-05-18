@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject Player;
     public GameObject Boss;
 
+    public static int towercount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
             gameover.SetActive(true);
             failed.SetActive(true);
             restart.SetActive(true);
+            StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -46,10 +49,19 @@ public class GameManager : MonoBehaviour
             gameover.SetActive(true);
             cleared.SetActive(true);
             restart.SetActive(true);
+            StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        if (towercount == 3)
+        {
+            StatManager.PLcurHP = Player.GetComponent<playerHP>().PLhp;
+            SceneManager.LoadScene(2);
+            towercount = 0;
+        }
+
     }
 
     public void Restart()

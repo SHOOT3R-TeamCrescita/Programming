@@ -9,6 +9,8 @@ public class CollReverse : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        if (!gameObject.activeInHierarchy) return;
+
         if (!meshCollider) meshCollider = GetComponent<MeshCollider>();
 
         var mesh = meshCollider.sharedMesh;
@@ -18,6 +20,7 @@ public class CollReverse : MonoBehaviour
 
         // also invert the normals
         mesh.normals = mesh.normals.Select(n => -n).ToArray();
+        Debug.Log("¿€µø!");
     }
 
     // Update is called once per frame

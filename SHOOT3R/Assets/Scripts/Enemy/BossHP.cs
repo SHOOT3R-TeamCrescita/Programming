@@ -37,12 +37,12 @@ public class BossHP : MonoBehaviour
             //BShp -= 10;
             //if (NoteMove.isDamage == true)
             //{
-                BShp -= 30f *(1f + ((float)NoteManager.noteCombo / 100f ));
+                BShp -= 10f *(1f + ((float)NoteManager.noteCombo / 100f ));
                // NoteManager.isDamage = false;
             //}
             if (NoteManager.isLong == true)
             {
-                BShp += 8f;
+                BShp -= 2f;
             }    
         }
     }

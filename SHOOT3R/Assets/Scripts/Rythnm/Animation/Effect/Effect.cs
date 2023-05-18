@@ -8,8 +8,8 @@ public class Effect : MonoBehaviour
     Animator effect;
     [SerializeField]
     Animator combo;
-    [SerializeField]
-    Animator combobar;
+    //[SerializeField]
+    //Animator combobar;
 
     //public GameObject NM;
 
@@ -29,21 +29,20 @@ public class Effect : MonoBehaviour
             if (NoteManager.isCheck)
             {
                 effect.SetBool("isEffect", true);
-                combo.SetBool("isCombo", true);
-                combobar.SetBool("isCheck",true);
+                combo.SetTrigger("isCombo");
+                //combobar.SetBool("isCheck",true);
             }
-            else if (!NoteManager.isCheck || NoteManager.noteCombo == 0)
-            {
-                combo.SetBool("isCombo", true);
-            }
+            //else if (!NoteManager.isCheck || NoteManager.noteCombo == 0)
+            //{
+             //   combo.SetBool("isCombo", true);
+            //}
         }
     }
 
     public void False()
     {
         effect.SetBool("isEffect", false);
-        combo.SetBool("isCombo", false);
-        combobar.SetBool("isCheck", false);
+       // combobar.SetBool("isCheck", false);
     }
 
 }

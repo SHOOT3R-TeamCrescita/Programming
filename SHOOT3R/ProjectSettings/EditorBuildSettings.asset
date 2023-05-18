@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Start/Start.unity
     guid: f76815985de8a334f8e808ccc6f9a18f
   - enabled: 1
-    path: Assets/Scenes/ProtoType/ProtoType.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Test_N.unity
+    guid: f0f9e0c228a3a1e4982dfb36d2982abb
+  - enabled: 1
+    path: Assets/Scenes/Test_B.unity
+    guid: 1c075baf4f81b5a468ae0fd1cad7c6ad
   m_configObjects: {}

@@ -50,6 +50,9 @@ public class playerMove : MonoBehaviour
 
     public Animator anim;
 
+    [SerializeField]
+    AudioSource shot;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -93,23 +96,28 @@ public class playerMove : MonoBehaviour
         }
 
         //발사 코드
-        if (Input.GetMouseButtonDown(0)&&shootTimer > shootDelay)
+        if (Input.GetMouseButtonDown(0))
         {
+            //SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
+            //if (shootTimer > shootDelay)
             anim.SetTrigger("isAtta");
 
             if (NoteManager.isCheck && !NoteManager.isLong)
             {
                 SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
-                Debug.Log("발사사사사사사사사사ㅏ사사사사사사사사사사사");
+                //shot.Play();
+                //Debug.Log("발사사사사사사사사사ㅏ사사사사사사사사사사사");
                 Vector3 aimDir = (mouseWorldPosition - bulletspawn.position).normalized;
                 Instantiate(bullet, bulletspawn.position, Quaternion.LookRotation(aimDir, Vector3.up));
                 //Instantiate(bullet, orientation.position, Quaternion.LookRotation(aimDir, Vector3.up));
 
-               // bullet bulletsc = bullet.GetComponent<bullet>();
+                // bullet bulletsc = bullet.GetComponent<bullet>();
                 //bulletsc.isColor = NoteMove.isColor;
 
                 shootTimer = 0f;
             }
+            else if (!NoteManager.isCheck && !NoteManager.isLong)
+                SFXPlayer.SfxPlay(SFX_Player.Sfx.miss);
         }
 
         if (Input.GetMouseButton(0))

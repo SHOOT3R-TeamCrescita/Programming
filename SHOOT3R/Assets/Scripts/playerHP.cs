@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class playerHP : MonoBehaviour
 {
-    public float PLhp = 100;
+    public float PLhp;
+    public float MaxHP;
     public TextMeshProUGUI HP;
     public Image health;
 
@@ -16,8 +17,11 @@ public class playerHP : MonoBehaviour
 
     void Start()
     {
-        
+        if (StatManager.PLcurHP != 0)
+            PLhp = StatManager.PLcurHP;
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -25,7 +29,7 @@ public class playerHP : MonoBehaviour
         HP.text = PLhp.ToString("F0");
         
 
-        health.fillAmount = PLhp / 200f;
+        health.fillAmount = PLhp / MaxHP;
         damaged.color = new Color(1f, 0f, 0f, color);
     }
 

@@ -8,7 +8,8 @@ public class NoteMove : MonoBehaviour
 
     public Animator anim;
 
-    //bool isClick;
+    bool isCheck;
+    bool isDie;
 
     void Start()
     {
@@ -22,21 +23,25 @@ public class NoteMove : MonoBehaviour
 
     void Update()
     {
-        transform.position += direction * 515f * Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && NoteManager.isCheck)
+        transform.position += direction * NoteCreater.noteSpeed * Time.deltaTime;
+        if (Input.GetMouseButtonDown(0) && isCheck)
             Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Destroy"))
+        if (collision.CompareTag("Check"))
+        {
+            isCheck = true;
+        }
+        else if (collision.CompareTag("Destroy"))
         {
             //NoteManager.isColor = false;
             Destroy(gameObject);
-            NoteManager.noteCombo--;
+            NoteManager.noteCombo-=5;
         }
-        else if (collision.CompareTag("DeathCheck"))
-            NoteManager.isDie = true;
+        //else if (collision.CompareTag("DeathCheck"))
+            //NoteManager.isDie = true;
             
 
         if (collision.CompareTag("Visual"))
@@ -45,10 +50,14 @@ public class NoteMove : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.CompareTag("Check"))
+        {
+            isCheck = false;
+        }
         if (collision.CompareTag("Visual"))
             anim.SetBool("isStart", false);
 
-        else if (collision.CompareTag("DeathCheck"))
-            NoteManager.isDie = false;
+        //else if (collision.CompareTag("DeathCheck"))
+            //NoteManager.isDie = false;
     }
 }

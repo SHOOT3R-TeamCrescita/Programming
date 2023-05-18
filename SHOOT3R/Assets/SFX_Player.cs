@@ -6,7 +6,7 @@ public class SFX_Player : MonoBehaviour
 {
     public AudioSource[] sfxPlayer;
     public AudioClip[] sfxClip;
-    public enum Sfx { hit, kick, shoot, jump, dash };
+    public enum Sfx { hit, kick, shoot, jump, dash, miss };
     int sfxCursor;
 
     // Start is called before the first frame update
@@ -39,6 +39,9 @@ public class SFX_Player : MonoBehaviour
                 break;
             case Sfx.dash:
                 sfxPlayer[sfxCursor].clip = sfxClip[4];
+                break;
+            case Sfx.miss:
+                sfxPlayer[sfxCursor].clip = sfxClip[5];
                 break;
 
         }
