@@ -6,14 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject gameover;
-    [SerializeField]
-    GameObject cleared;
-    [SerializeField]
-    GameObject failed;
-    [SerializeField]
-    GameObject restart;
+    [SerializeField] GameObject gameover;
+    [SerializeField] GameObject cleared;
+
+    //컨티뉴
+    [SerializeField] GameObject failedAni;
+    [SerializeField] GameObject ContinueUI;
+    [SerializeField] GameObject restart;
+    [SerializeField] Image[] life;
+
+    //클리어
+    [SerializeField] GameObject clearedAni;
+
+    [SerializeField] GameObject noteCreater;
+
+    //일시정지
+    [SerializeField] GameObject Pause;
+
+    //컷씬
+    [SerializeField] GameObject CutScene;
+    [SerializeField] GameObject MainUI; //전체 UI
 
 
     public GameObject Player;
@@ -21,9 +33,22 @@ public class GameManager : MonoBehaviour
 
     public static int towercount;
 
+    public static bool isStop = false;
+
+    bool justCheck = true;
+
+    public static float stoptime;
+
+
+    void Awake()
+    {
+    }
     // Start is called before the first frame update
     void Start()
     {
+        isStop = false;
+        towercount = 0;
+        stoptime = 1;
         Time.timeScale = 1;
         NoteManager.noteCombo = 0;
     }
@@ -31,45 +56,140 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.GetComponent<playerHP>().PLhp < 0)
+        if (Player.GetComponent<playerHP>().PLhp <= 0 && !CutSceneMove.isEnd)
         {
-            Time.timeScale = 0;
-            gameover.SetActive(true);
-            failed.SetActive(true);
-            restart.SetActive(true);
-            StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
-
+            isStop = true;
+            Time.timeScale = stoptime;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            if (justCheck)
+            {
+                StartCoroutine("StopCO");
+                Player.GetComponent<playerMove>().anim.SetTrigger("isDie");
+                justCheck = false;
+                failedAni.SetActive(true);
+            }
         }
 
-        else if (Boss.GetComponent<BossHP>().BShp < 0)
+        else if (Boss.GetComponent<BossHP>().BShp <= 0)
         {
-            Time.timeScale = 0;
-            gameover.SetActive(true);
-            cleared.SetActive(true);
-            restart.SetActive(true);
-            StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            isStop = true;
+            Time.timeScale = stoptime;
+            if (justCheck)
+            {
+                StartCoroutine("StopCO");
+                justCheck = false;
+                clearedAni.SetActive(true);
+            }
         }
 
         if (towercount == 3)
         {
             StatManager.PLcurHP = Player.GetComponent<playerHP>().PLhp;
-            SceneManager.LoadScene(2);
+            StatManager.curNoteCombo = NoteManager.noteCombo;
+            CutScene.SetActive(true);
+            MainUI.SetActive(false);
             towercount = 0;
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isStop)
+            {
+                Pause.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0f;
+                noteCreater.GetComponent<NoteCreater>().music.Pause();
+                isStop = true;
+            }
+        }
+
+        CheckLife();
     }
 
-    public void Restart()
+    public void Continue()
+    {
+        noteCreater.GetComponent<NoteCreater>().music.Play();
+        isStop = false;
+        Pause.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1;
+    }
+
+    public void Exit()
+    {
+        StatManager.Contuinue = 3;
+        //life[StatManager.Contuinue].color = new Color(1, 0, 0, 1);
+        isStop = false;
+        Loading.LoadScene(0,3.0f);
+    }
+
+    /*public void Restart()
     {
         gameover.SetActive(false);
         cleared.SetActive(false);
-        failed.SetActive(false);
+        //failed.SetActive(false);
         restart.SetActive(false);
-        SceneManager.LoadScene(1);
+        StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
+        StatManager.curNoteCombo = 0;
+        Loading.LoadScene(2, 3.0f);
+    }*/
+
+    public void Retry()
+    {
+        StatManager.Contuinue--;
+        isStop = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        CheckStage();
+    }
+
+    void CheckStage()
+    {
+        switch(noteCreater.GetComponent<NoteCreater>().stageCheck)
+        {
+            case 1f:
+                Loading.LoadScene(2, 1.5f);
+                break;
+            case 1.5f:
+                Loading.LoadScene(2, 1.5f);
+                break;
+            default:
+                Debug.Log("체크!");
+                break;
+        }
+    }
+
+    void CheckLife()
+    {
+        if(StatManager.Contuinue==2)
+        {
+            life[2].color = new Color(0, 0, 0, 0);
+        }
+        else if (StatManager.Contuinue ==1)
+        {
+            life[2].color = new Color(0, 0, 0, 0);
+            life[1].color = new Color(0, 0, 0, 0);
+        }
+        else if (StatManager.Contuinue == 0)
+        {
+            life[2].color = new Color(0, 0, 0, 0);
+            life[1].color = new Color(0, 0, 0, 0);
+            life[0].color = new Color(0, 0, 0, 0);
+        }
+    }
+
+    private IEnumerator StopCO()
+    {
+        stoptime = 0.8f;
+        while (stoptime >= 0f)
+        {
+            stoptime -= 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (stoptime < 0)
+            stoptime = 0;
     }
 }

@@ -58,7 +58,7 @@ public class ProtoTypeBoss : EnemyDefault
 
                         range.SetActive(true);
                         nav.isStopped = false;
-                        nav.speed = 40;
+                        nav.speed = 25;
                         BossHP.dotHP = true;
                     }
                     break;

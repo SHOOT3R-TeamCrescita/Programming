@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BossHP : MonoBehaviour
 {
     public float BShp;
+    public float MaxBShp;
     public static bool dotHP = false;
     //public static bool isDamage = false;
     public TextMeshProUGUI HP;
@@ -26,7 +27,7 @@ public class BossHP : MonoBehaviour
         if (dotHP)
             BShp += 0.2f;
 
-        health.fillAmount = BShp / 3000f;
+        health.fillAmount = BShp / MaxBShp;
 
     }
 

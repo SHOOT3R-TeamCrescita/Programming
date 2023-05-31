@@ -25,7 +25,6 @@ public class shot : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall")
             StartCoroutine("Timer");
     }
     private IEnumerator Timer()

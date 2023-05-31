@@ -15,15 +15,29 @@ public class Zaco3 : ZacomobDefault
 
         bool isShot = true;
 
+        nav.isStopped = true;
+        isturn = true;
+
         while (isShot)
         {
-            nav.speed = 1;
             Instantiate(ball, transform.position, rotation);
             isShot = false;
             yield return new WaitForSeconds(3f);
-            nav.speed = 15;
         }
-            isAttack = false;
+        nav.isStopped = false;
+        nav.speed = 15;
+        isAttack = false;
+    }
+
+    protected override IEnumerator Timer()
+    {
+        nav.speed = 0;
+        //nav.isStopped = true;
+        isAttack = true;
+        isRota = true;
+        anim.SetTrigger("isDie");
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     protected override void OnDestroy()

@@ -55,12 +55,12 @@ public class playerMove : MonoBehaviour
 
     void Start()
     {
+        Physics.gravity = new Vector3(0, gravity, 0);
+
         rigid = GetComponent<Rigidbody>();
         rigid.freezeRotation = true;
 
         anim = transform.GetChild(0).GetComponent<Animator>();
-
-        Physics.gravity = new Vector3(0, gravity, 0);
 
         SFXPlayer.GetComponents<SFX_Player>();
 
@@ -96,7 +96,7 @@ public class playerMove : MonoBehaviour
         }
 
         //발사 코드
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&&!GameManager.isStop)
         {
             //SFXPlayer.SfxPlay(SFX_Player.Sfx.shoot);
             //if (shootTimer > shootDelay)
@@ -120,7 +120,7 @@ public class playerMove : MonoBehaviour
                 SFXPlayer.SfxPlay(SFX_Player.Sfx.miss);
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !GameManager.isStop)
         {
             anim.SetTrigger("isAtta");
 
@@ -161,7 +161,7 @@ public class playerMove : MonoBehaviour
             rigid.velocity = new Vector3(rigid.velocity.x, rigid.velocity.y, maxspeed * (-1));
 
         //점프
-        if (Input.GetButtonDown("Jump") && !isJump)
+        if (Input.GetButtonDown("Jump") && !isJump && !GameManager.isStop)
         {
             SFXPlayer.SfxPlay(SFX_Player.Sfx.jump);
             anim.SetTrigger("isJump");
@@ -170,7 +170,7 @@ public class playerMove : MonoBehaviour
         }
 
         //대쉬
-        if (Input.GetKey(KeyCode.LeftShift) && isDash)
+        if (Input.GetKey(KeyCode.LeftShift) && isDash && !GameManager.isStop)
         {
             //Debug.Log("대쉬 가능!");
             SFXPlayer.SfxPlay(SFX_Player.Sfx.dash);
@@ -189,10 +189,18 @@ public class playerMove : MonoBehaviour
     //이중 점프 막기 판정
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6|| collision.gameObject.layer == 13)
         {
             isJump = false;
         }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 13)
+            Physics.gravity = new Vector3(0, gravity+50, 0);
+        else
+            Physics.gravity = new Vector3(0, gravity, 0);
     }
 
     private IEnumerator Dash(float WaitTime)

@@ -23,4 +23,15 @@ public class Zaco3_1 : ZacomobDefault
         }
         isAttack = false;
     }
+
+    protected override IEnumerator Timer()
+    {
+        nav.speed = 0;
+        //nav.isStopped = true;
+        isAttack = true;
+        isRota = true;
+        anim.SetTrigger("isDie");
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
 }

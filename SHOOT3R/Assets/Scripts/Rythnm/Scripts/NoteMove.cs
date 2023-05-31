@@ -9,7 +9,7 @@ public class NoteMove : MonoBehaviour
     public Animator anim;
 
     bool isCheck;
-    bool isDie;
+    bool isDie = true;
 
     void Start()
     {
@@ -23,26 +23,29 @@ public class NoteMove : MonoBehaviour
 
     void Update()
     {
-        transform.position += direction * NoteCreater.noteSpeed * Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && isCheck)
-            Destroy(gameObject);
+        if (isDie)
+            transform.position += direction * NoteCreater.noteSpeed * Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0) && isCheck && !GameManager.isStop)
+        {
+            isDie = false;
+            anim.SetTrigger("isNote");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Check"))
-        {
             isCheck = true;
-        }
-        else if (collision.CompareTag("Destroy"))
+
+        if (collision.CompareTag("Destroy"))
         {
             //NoteManager.isColor = false;
             Destroy(gameObject);
-            NoteManager.noteCombo-=5;
+            NoteManager.noteCombo-=3;
         }
         //else if (collision.CompareTag("DeathCheck"))
-            //NoteManager.isDie = true;
-            
+            //NoteManager.isDie = true; 
 
         if (collision.CompareTag("Visual"))
             anim.SetBool("isStart", true);
@@ -51,13 +54,17 @@ public class NoteMove : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Check"))
-        {
             isCheck = false;
-        }
+
         if (collision.CompareTag("Visual"))
             anim.SetBool("isStart", false);
 
         //else if (collision.CompareTag("DeathCheck"))
             //NoteManager.isDie = false;
+    }
+
+    public void NoteDestroy() 
+    { 
+        Destroy(gameObject);
     }
 }

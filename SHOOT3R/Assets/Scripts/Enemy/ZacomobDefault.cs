@@ -16,9 +16,12 @@ public class ZacomobDefault : MonoBehaviour
     public bool isAttack = false;
 
     public bool isRota = false;
+    public bool isturn = false;
 
     protected Rigidbody enemy;
     protected NavMeshAgent nav;
+
+    protected Vector3 targetDirection;
 
     public Animator anim;
 
@@ -34,6 +37,7 @@ public class ZacomobDefault : MonoBehaviour
 
     void Update()
     {
+        Turn();
         dist = Vector3.Distance(target.position, transform.position);
         nav.SetDestination(target.position);
         CheckDist();
@@ -69,21 +73,21 @@ public class ZacomobDefault : MonoBehaviour
     {
         while (!isAttack)
         {
-            if (dist < attackrange)
+            if (dist < attackrange )
             {
                 isAttack = true;
                 StartCoroutine(Attack());
                 //Debug.Log("공격");
             }
 
-            else if (dist > attackrange && dist < outrange)
+            else if (dist > attackrange && dist < outrange && HP > 0)
             {
                 nav.isStopped = false;
                 nav.speed = 10;
                 //Debug.Log("죽이자!");
             }
 
-            else if (dist > outrange)
+            else if (dist > outrange && HP > 0)
             {
                 nav.isStopped = true;
                 //Debug.Log("배고파");
@@ -92,6 +96,15 @@ public class ZacomobDefault : MonoBehaviour
         }
     }
 
+    void Rotation()
+    {
+        targetDirection = target.position - transform.position;
+        //if (isRota)
+        //{
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 150f);
+       // }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -113,22 +126,29 @@ public class ZacomobDefault : MonoBehaviour
         }
     }
 
+    public void Turn()
+    {
+        targetDirection = target.position - transform.position;
+        if (isturn)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 150f);
+        }
+    }
+
     protected virtual void OnDestroy()
     {
 
     }
 
-    private IEnumerator Timer()
+    protected virtual IEnumerator Timer()
     {
-        while (true)
-        {
             nav.speed = 0;
             //nav.isStopped = true;
             isAttack = true;
             isRota = true;
             yield return new WaitForSeconds(2f);
             Destroy(gameObject);
-        }
     }
 
     protected virtual IEnumerator Attack()

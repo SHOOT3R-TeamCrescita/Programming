@@ -33,7 +33,8 @@ public class NoteCreater : MonoBehaviour
     void Update()
     {
         //currentTime += Time.deltaTime;
-        NC.text = noteCount.ToString();
+        //NC.text = noteCount.ToString();
+        NC.text = StatManager.Contuinue.ToString();
 
         foreach (Intervals interval in _intervals)
         {
@@ -94,7 +95,7 @@ public class NoteCreater : MonoBehaviour
                 //currentTime -= 30d / bpm;
                 //noteCount++;
             }
-            else if ((noteCount%16==3||noteCount%16==5||noteCount%16==6||noteCount%16==8||noteCount%16==10||noteCount%16==12||noteCount%16==14||noteCount%16==0) && (noteCount > 448 && noteCount < 580)) //노트 생성
+            else if ((noteCount%16==3||noteCount%16==5||noteCount%16==7||noteCount%16==9||noteCount%16==10||noteCount%16==12||noteCount%16==14||noteCount%16==0) && (noteCount > 448 && noteCount < 580)) //노트 생성
             {
                 longNote.SetActive(false);
                 NoteManager.isLong = false;
@@ -304,7 +305,7 @@ public class NoteCreater : MonoBehaviour
     {
         isTe = true;
         noteCount++;
-        Debug.Log("아아");
+        //Debug.Log("아아");
     }    
 }
 

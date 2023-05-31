@@ -12,6 +12,7 @@ TagManager:
   - Zaco
   - DeathCheck
   - Boss
+  - Tower
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - Enemy
   - Bullet
   - EnemyAttack
-  - 
-  - 
+  - FloorRide
+  - Building
   - 
   - 
   - 

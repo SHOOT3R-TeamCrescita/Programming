@@ -6,6 +6,7 @@ public class Zaco2 : ZacomobDefault
 {
     protected override IEnumerator Attack()
     {
+        yield return new WaitForSeconds(0.5f);
         float time = 1f;
 
         while (time > 0)

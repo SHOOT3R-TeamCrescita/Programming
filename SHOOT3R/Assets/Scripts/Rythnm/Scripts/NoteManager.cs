@@ -18,7 +18,7 @@ public class NoteManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        noteCombo = StatManager.curNoteCombo;
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class NoteManager : MonoBehaviour
     {
         Combo.text = noteCombo.ToString();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !GameManager.isStop)
         {
             if (!isCheck)
                 noteCombo-=3;

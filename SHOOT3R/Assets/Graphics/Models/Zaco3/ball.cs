@@ -14,7 +14,7 @@ public class ball : MonoBehaviour
 
     private void Start()
     {
-        balls.velocity = transform.forward * 100f + transform.up * 8f;
+        balls.velocity = transform.forward * 100f + transform.up * 4f;
     }
 
     void Update()
@@ -24,11 +24,11 @@ public class ball : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall")
-            StartCoroutine("Timer");
-
         if (collision.gameObject.tag == "Player")
             OnDestroy();
+
+        else
+            StartCoroutine("Timer");
 
     }
 

@@ -304,7 +304,7 @@ public class EnemyDefault : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("¾å!!!");
+            //Debug.Log("¾å!!!");
             yield return null;
         }
     }

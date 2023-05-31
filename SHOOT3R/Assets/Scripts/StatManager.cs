@@ -5,6 +5,8 @@ using UnityEngine;
 public class StatManager : MonoBehaviour
 {
     public static float PLcurHP;
+    public static int curNoteCombo;
+    public static int Contuinue;
 
     private void Awake()
     {
@@ -13,6 +15,11 @@ public class StatManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        Contuinue = 3;
     }
     // Update is called once per frame
     void Update()

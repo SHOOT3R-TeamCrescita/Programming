@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Destroy : MonoBehaviour
 {
+    [SerializeField] float time;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +20,12 @@ public class Destroy : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f);
-            OnDestroy();
+            yield return new WaitForSeconds(time);
+            ObjDestroy();
         }
     }
 
-    void OnDestroy()
+    public void ObjDestroy()
     {
         Destroy(gameObject);
     }
