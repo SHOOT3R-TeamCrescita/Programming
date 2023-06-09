@@ -19,6 +19,7 @@ public class EnemyDefault : MonoBehaviour
     public int defSpeed;
     public int tracSpeed;
     public int damSpeed;
+    public int stopSpeed;
 
     public LayerMask targetPlayer;  //플레이어 레이어
     public LayerMask obstacleMask;  //장애물 레이어
@@ -126,7 +127,7 @@ public class EnemyDefault : MonoBehaviour
                         if (CanSee(target))
                         {
                             nav.isStopped = true;
-                            //Debug.Log("찾았다!");
+                            Debug.Log("찾았다!");
                             isRota = true;
                             isAttack = true;
                             StartCoroutine(BossAttack());
@@ -134,15 +135,15 @@ public class EnemyDefault : MonoBehaviour
                         else
                         {
                             nav.isStopped = false;
-                            //Debug.Log("근처에 있는데");
-                            nav.speed = 1;
+                            Debug.Log("근처에 있는데");
+                            nav.speed = stopSpeed;
                             isRota = false;
                         }
                     }
                 }
                 if (dist < attackrange)
                 {
-                    nav.speed = 1; 
+                    nav.speed = stopSpeed; 
                     curState = CurrentState.Attack;
                 }
             }
@@ -327,6 +328,12 @@ public class EnemyDefault : MonoBehaviour
         {
             bossanim.SetBool("isRun", true);
             bossanim.SetBool("isIdle", false);
+            bossanim.SetBool("isWalk", false);
+        }
+        else if(nav.speed == stopSpeed)
+        {
+            bossanim.SetBool("isRun", false);
+            bossanim.SetBool("isIdle", true);
             bossanim.SetBool("isWalk", false);
         }
         else

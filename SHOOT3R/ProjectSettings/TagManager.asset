@@ -13,6 +13,7 @@ TagManager:
   - DeathCheck
   - Boss
   - Tower
+  - Boss1Att
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - EnemyAttack
   - FloorRide
   - Building
-  - 
+  - Boss1Att
   - 
   - 
   - 

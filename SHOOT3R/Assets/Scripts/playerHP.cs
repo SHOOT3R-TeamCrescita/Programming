@@ -55,6 +55,25 @@ public class playerHP : MonoBehaviour
             StartCoroutine("Damaged");
             PLhp -= 10f;
         }
+
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 15)
+        {
+            StartCoroutine("Damaged");
+            PLhp -= 0.15f;
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        //º¸½º1
+        if (collision.gameObject.tag == "Boss1Att")
+        {
+            StartCoroutine("Damaged");
+            PLhp -= 20f;
+        }
     }
 
     private void OnTriggerStay(Collider collision)

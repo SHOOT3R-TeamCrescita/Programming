@@ -9,7 +9,8 @@ public class Boss1 : EnemyDefault
     public Transform shootingpoint;
     public GameObject range;
 
-    
+    public float time = 1.2f;
+
     public Animator bookCol;
 
     [SerializeField]
@@ -19,42 +20,60 @@ public class Boss1 : EnemyDefault
     {
         while (curState == CurrentState.Attack)
         {
-            nav.isStopped = true;
+            //nav.isStopped = true;
 
-            int pattern = Random.Range(1, 2);
+            int pattern = Random.Range(0, 101);
 
-            switch (pattern)
+            if(pattern<76)
             {
-                case 1:
-                    {
-                        bossanim.SetTrigger("isAttack");
-                        bookCol.SetTrigger("isAttack");
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i < 2; i++)
-                    {
-                        rocket.Play();
-                        targetDirection = target.position - transform.position;
-                        //Instantiate(misile, transform.position, Quaternion.LookRotation(targetDirection, Vector3.up)); 
-                        GameObject misileA = Instantiate(misile, shootingpoint.position, Quaternion.LookRotation(targetDirection, Vector3.up));
-                        Misile mis = misileA.GetComponent<Misile>();
-                        mis.target = target;
-                    }
-                    break;
-                case 3:
-                    {
-                        range.SetActive(true);
-                        //nav.isStopped = false;
-                        //nav.speed = 25;
-                        BossHP.dotHP = true;
-                    }
-                    break;
+                nav.isStopped = false;
+                nav.speed = 20;
+
+                if (dist < 5.5f)
+                {
+                    nav.speed = 10;
+                    bossanim.SetTrigger("isAttack");
+                    bookCol.SetTrigger("isAttack");
+                }
+                else
+                    nav.speed = 20;
+
+                if (Boss1Collider.hitcount != 0)
+                {
+                    bossanim.SetTrigger("isHit");
+                    bookCol.SetTrigger("isHit");
+                    Boss1Collider.hitcount = 0;
+                }
+
             }
-            yield return new WaitForSeconds(3f);
+            else if(pattern>=76)
+            {
+                while(time > 0)
+                {
+                    bossanim.SetTrigger("isDash");
+                    nav.isStopped = false;
+                    this.gameObject.layer = 15;
+                    nav.speed = 35;
+                    time -= Time.deltaTime;
+
+                    yield return new WaitForFixedUpdate();
+                }
+                nav.speed = 15;
+                bossanim.SetBool("isRun", false);
+                bossanim.SetBool("isIdle", true);
+                bossanim.SetBool("isWalk", false);
+            }
+            
+            yield return new WaitForSeconds(2f);
+            time = 1.2f;
             range.SetActive(false);
-            nav.isStopped = true;
-            nav.speed = 1;
+            this.gameObject.layer = 10;
+
+            nav.speed = 15;
+            bossanim.SetBool("isRun", false);
+            bossanim.SetBool("isIdle", true);
+            bossanim.SetBool("isWalk", false);
+
             BossHP.dotHP = false;
             isAttack = false;
         }
@@ -62,5 +81,4 @@ public class Boss1 : EnemyDefault
         if(curState != CurrentState.Attack)
             yield return StartCoroutine(CheckState(0.25f));
     }
-
 }

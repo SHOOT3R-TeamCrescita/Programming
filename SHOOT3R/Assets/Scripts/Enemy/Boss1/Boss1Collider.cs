@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boss1Collider : MonoBehaviour
 {
+    public static int hitcount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,6 @@ public class Boss1Collider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 7)
-            Debug.Log("check!");
+            hitcount++;
     }
 }
