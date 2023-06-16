@@ -8,6 +8,10 @@ public class Effect : MonoBehaviour
     Animator effect;
     [SerializeField]
     Animator combo;
+    [SerializeField]
+    Animator vfx;
+    [SerializeField]
+    GameObject effect20;
     //[SerializeField]
     //Animator combobar;
 
@@ -24,12 +28,18 @@ public class Effect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (NoteManager.noteCombo >= 20)
+            effect20.SetActive(true);
+        else
+            effect20.SetActive(false);
+
         if (Input.GetMouseButtonDown(0) && !GameManager.isStop)
         {
             if (NoteManager.isCheck)
             {
                 effect.SetBool("isEffect", true);
                 combo.SetTrigger("isCombo");
+                vfx.SetTrigger("isCombo");
                 //combobar.SetBool("isCheck",true);
             }
             //else if (!NoteManager.isCheck || NoteManager.noteCombo == 0)
@@ -45,4 +55,5 @@ public class Effect : MonoBehaviour
        // combobar.SetBool("isCheck", false);
     }
 
+    
 }

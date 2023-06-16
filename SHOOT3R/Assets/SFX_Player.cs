@@ -6,7 +6,7 @@ public class SFX_Player : MonoBehaviour
 {
     public AudioSource[] sfxPlayer;
     public AudioClip[] sfxClip;
-    public enum Sfx { hit, kick, shoot, jump, dash, miss };
+    public enum Sfx { combo, item, shoot, jump, dash, miss };
     int sfxCursor;
 
     // Start is called before the first frame update
@@ -25,11 +25,11 @@ public class SFX_Player : MonoBehaviour
     {
         switch (type)
         {
-            case Sfx.hit:
-                sfxPlayer[sfxCursor].clip = sfxClip[Random.Range(0, 2)];
+            case Sfx.combo:
+                sfxPlayer[sfxCursor].clip = sfxClip[0];
                 break;
-            case Sfx.kick:
-                sfxPlayer[sfxCursor].clip = sfxClip[Random.Range(0, 2)];
+            case Sfx.item:
+                sfxPlayer[sfxCursor].clip = sfxClip[1];
                 break;
             case Sfx.shoot:
                 sfxPlayer[sfxCursor].clip = sfxClip[2];

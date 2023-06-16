@@ -146,7 +146,12 @@ public class playerMove : MonoBehaviour
         //이동
         moveDirection = orientation.forward * v + orientation.right * h;
 
-        rigid.AddForce(moveDirection.normalized * Time.deltaTime *1000 * speed, ForceMode.Force);
+        if(NoteManager.noteCombo>=20)
+            rigid.AddForce(moveDirection.normalized * Time.deltaTime * 1000 * 1.75f * speed, ForceMode.Force);
+        else
+            rigid.AddForce(moveDirection.normalized * Time.deltaTime * 1000 * speed, ForceMode.Force);
+
+
         anim.SetBool("isWalk", moveDirection != Vector3.zero);
 
 
@@ -159,6 +164,7 @@ public class playerMove : MonoBehaviour
             rigid.velocity = new Vector3(rigid.velocity.x, rigid.velocity.y, maxspeed);
         else if (rigid.velocity.z < maxspeed * (-1))
             rigid.velocity = new Vector3(rigid.velocity.x, rigid.velocity.y, maxspeed * (-1));
+
 
         //점프
         if (Input.GetButtonDown("Jump") && !isJump && !GameManager.isStop)
@@ -183,7 +189,6 @@ public class playerMove : MonoBehaviour
                 rigid.AddForce(moveDirection.normalized * 800f * 250f, ForceMode.Force);
             StartCoroutine(Dash(2.5f));
         }
-
     }
 
     //이중 점프 막기 판정

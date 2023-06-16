@@ -27,7 +27,9 @@ public class playerHP : MonoBehaviour
     void Update()
     {
         HP.text = PLhp.ToString("F0");
-        
+
+        if (PLhp > MaxHP)
+            PLhp = MaxHP;
 
         health.fillAmount = PLhp / MaxHP;
         damaged.color = new Color(1f, 0f, 0f, color);
@@ -56,13 +58,16 @@ public class playerHP : MonoBehaviour
             PLhp -= 10f;
         }
 
+        if (collision.gameObject.layer == 16)
+            PLhp -= 10000f;
+
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.layer == 15)
         {
             StartCoroutine("Damaged");
-            PLhp -= 0.15f;
+            PLhp -= 0.4f;
         }
     }
 

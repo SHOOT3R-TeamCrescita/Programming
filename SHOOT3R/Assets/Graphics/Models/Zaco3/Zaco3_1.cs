@@ -34,4 +34,8 @@ public class Zaco3_1 : ZacomobDefault
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
+
+    protected override void OnDestroy()
+    {
+    }
 }

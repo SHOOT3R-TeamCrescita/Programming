@@ -24,7 +24,7 @@ public class Boss1 : EnemyDefault
 
             int pattern = Random.Range(0, 101);
 
-            if(pattern<76)
+            if(pattern<66)
             {
                 nav.isStopped = false;
                 nav.speed = 20;
@@ -46,7 +46,7 @@ public class Boss1 : EnemyDefault
                 }
 
             }
-            else if(pattern>=76)
+            else if(pattern>=66)
             {
                 while(time > 0)
                 {

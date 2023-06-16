@@ -42,7 +42,7 @@ public class NoteMove : MonoBehaviour
         {
             //NoteManager.isColor = false;
             Destroy(gameObject);
-            NoteManager.noteCombo-=3;
+            NoteManager.noteCombo--;
         }
         //else if (collision.CompareTag("DeathCheck"))
             //NoteManager.isDie = true; 

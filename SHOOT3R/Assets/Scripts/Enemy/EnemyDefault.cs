@@ -39,6 +39,7 @@ public class EnemyDefault : MonoBehaviour
     public bool isCheck = true;  //IdleMove 판별
     bool isRota = false;  //회전 판별
     public bool isAttack = false; //공격중인지 판별
+    bool isDieC = true;
 
     protected Vector3 targetDirection;
 
@@ -63,6 +64,12 @@ public class EnemyDefault : MonoBehaviour
         nav.SetDestination(target.position);
 
         //Debug.Log(nav.speed);
+
+        if(gameObject.GetComponent<BossHP>().BShp <= 0 && isDieC)
+        {
+            bossanim.SetTrigger("isDie");
+            isDieC = false;
+        }
     }
 
     void FixedUpdate()

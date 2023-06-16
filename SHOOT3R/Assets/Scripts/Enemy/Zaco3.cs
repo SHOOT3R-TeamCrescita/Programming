@@ -6,7 +6,7 @@ public class Zaco3 : ZacomobDefault
 {
     public GameObject ball;
     public GameObject baby;
-    bool isDie = true;
+    bool isDie3 = true;
 
     protected override IEnumerator Attack()
     {
@@ -45,7 +45,7 @@ public class Zaco3 : ZacomobDefault
         //Vector3 direction = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(target.position - transform.position);
 
-        if (HP < 0 && isDie)
+        if (HP < 0 && isDie3)
         {
             anim.SetTrigger("IsDie");
             for (int i = 0; i < 4; i++)
@@ -54,7 +54,9 @@ public class Zaco3 : ZacomobDefault
                 Zaco3_1 zac = babyA.GetComponent<Zaco3_1>();
                 zac.target = target;
             }
-            isDie = false;
+            //int randomInex = Random.Range(0, Items.Length);
+            //GameObject InstItem = Instantiate(Items[randomInex], transform.position, rotation);
+            isDie3 = false;
         }
     }
 }

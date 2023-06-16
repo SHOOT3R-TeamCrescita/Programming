@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject gameover;
-    [SerializeField] GameObject cleared;
+    //[SerializeField] GameObject gameover;
+    //[SerializeField] GameObject cleared;
 
     //컨티뉴
     [SerializeField] GameObject failedAni;
     [SerializeField] GameObject ContinueUI;
-    [SerializeField] GameObject restart;
+    //[SerializeField] GameObject restart;
     [SerializeField] Image[] life;
 
     //클리어
@@ -85,8 +85,7 @@ public class GameManager : MonoBehaviour
 
         if (towercount == 3)
         {
-            StatManager.PLcurHP = Player.GetComponent<playerHP>().PLhp;
-            StatManager.curNoteCombo = NoteManager.noteCombo;
+            Save();
             CutScene.SetActive(true);
             MainUI.SetActive(false);
             towercount = 0;
@@ -120,7 +119,7 @@ public class GameManager : MonoBehaviour
 
     public void Exit()
     {
-        StatManager.Contuinue = 3;
+        Init();
         //life[StatManager.Contuinue].color = new Color(1, 0, 0, 1);
         isStop = false;
         Loading.LoadScene(0,3.0f);
@@ -191,5 +190,18 @@ public class GameManager : MonoBehaviour
         }
         if (stoptime < 0)
             stoptime = 0;
+    }
+
+    void Save()
+    {
+        StatManager.PLcurHP = Player.GetComponent<playerHP>().PLhp;
+        StatManager.curNoteCombo = NoteManager.noteCombo;
+    }
+
+    void Init()
+    {
+        StatManager.Contuinue = 3;
+        StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
+        StatManager.curNoteCombo = 0;
     }
 }

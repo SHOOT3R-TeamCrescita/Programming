@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6575274825467586804}
   m_Layer: 10
   m_Name: Bone012
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8593896069159873736}
   m_Layer: 10
   m_Name: Bone010
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 3137449355502058480}
   m_Layer: 10
   m_Name: Bone007
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 3647905004175279110}
   m_Layer: 10
   m_Name: Bone016
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,9 +141,11 @@ GameObject:
   - component: {fileID: 2498388601956504395}
   - component: {fileID: 2498388601956504396}
   - component: {fileID: 2653690443768659200}
+  - component: {fileID: -1126505636154366315}
+  - component: {fileID: -8970754298752120083}
   m_Layer: 10
   m_Name: Zaco3_PF
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,13 +159,13 @@ Transform:
   m_GameObject: {fileID: 3345443226356823309}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -46.221817, y: -4.691, z: 70.87564}
-  m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7499438391081255864}
   - {fileID: 521888044958502745}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2498388601956504394
 Rigidbody:
@@ -229,12 +231,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   dist: 0
-  HP: 100
+  HP: 25
   attackrange: 15
   outrange: 50
   isAttack: 0
   isRota: 0
+  isturn: 0
   anim: {fileID: 0}
+  Items: []
 --- !u!195 &2498388601956504396
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -271,13 +275,124 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   dist: 0
-  HP: 50
-  attackrange: 20
-  outrange: 30
+  HP: 25
+  attackrange: 35
+  outrange: 40
   isAttack: 0
   isRota: 0
+  isturn: 0
   anim: {fileID: 2498388601956504397}
+  Items: []
   ball: {fileID: 16471065957205041, guid: de3665b640d16574fbfd820ea74e0903, type: 3}
+--- !u!114 &-1126505636154366315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345443226356823309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfcdc0e71b5b19241a73438c80b3e8ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit: {fileID: -8970754298752120083}
+--- !u!82 &-8970754298752120083
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345443226356823309}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a9194661e3a3fa94db5921531489550d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3856184748927067360
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +404,7 @@ GameObject:
   - component: {fileID: 4496202710110101312}
   m_Layer: 10
   m_Name: Bone005
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -320,7 +435,7 @@ GameObject:
   - component: {fileID: 6134792336872719938}
   m_Layer: 10
   m_Name: Bone002
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +467,7 @@ GameObject:
   - component: {fileID: 2352846219631637548}
   m_Layer: 10
   m_Name: Bone003
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -384,7 +499,7 @@ GameObject:
   - component: {fileID: 5633844061473342441}
   m_Layer: 10
   m_Name: Bone008
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -416,7 +531,7 @@ GameObject:
   - component: {fileID: 961643181797762083}
   m_Layer: 10
   m_Name: Bone013
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,7 +564,7 @@ GameObject:
   - component: {fileID: 3018578225029951417}
   m_Layer: 10
   m_Name: Object001
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -549,7 +664,7 @@ GameObject:
   - component: {fileID: 1310833229327410150}
   m_Layer: 10
   m_Name: Bone015
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -581,7 +696,7 @@ GameObject:
   - component: {fileID: 7507511751794977588}
   m_Layer: 10
   m_Name: Bone011
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -613,7 +728,7 @@ GameObject:
   - component: {fileID: 3775925165852187598}
   m_Layer: 10
   m_Name: Bone009
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -645,7 +760,7 @@ GameObject:
   - component: {fileID: 6853808736103615207}
   m_Layer: 10
   m_Name: Bone004
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -677,7 +792,7 @@ GameObject:
   - component: {fileID: 361782842651538722}
   m_Layer: 10
   m_Name: Bone014
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -709,7 +824,7 @@ GameObject:
   - component: {fileID: 951921113137633328}
   m_Layer: 10
   m_Name: Bone006
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -741,7 +856,7 @@ GameObject:
   - component: {fileID: 7499438391081255864}
   m_Layer: 10
   m_Name: Bone001
-  m_TagString: Untagged
+  m_TagString: Zaco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

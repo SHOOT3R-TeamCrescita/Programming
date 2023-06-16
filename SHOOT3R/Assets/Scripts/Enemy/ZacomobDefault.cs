@@ -25,6 +25,8 @@ public class ZacomobDefault : MonoBehaviour
 
     public Animator anim;
 
+    public GameObject[] Items;
+
     float x;
 
     void Awake()

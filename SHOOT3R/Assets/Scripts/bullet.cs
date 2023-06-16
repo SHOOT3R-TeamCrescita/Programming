@@ -19,7 +19,7 @@ public class bullet : MonoBehaviour
 
     void Start()
     {
-        bulletS.velocity = transform.forward * 400f + transform.up * 20f;
+        bulletS.velocity = transform.forward * 400f + transform.up * 5f;
 
         //bulletS.AddForce(Vector3.forward * 20f,ForceMode.Impulse);
         //isColor = NoteManager.isColor;
@@ -34,14 +34,15 @@ public class bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-            StartCoroutine("Timer");
+        StartCoroutine("Timer");
 
-        if (collision.gameObject.tag == "Boss")
+        if (collision.gameObject.CompareTag("Boss"))
         {
+      
             Instantiate(effect, transform.position, Quaternion.identity);
         }
 
-        if (collision.gameObject.tag == "Zaco")
+        if (collision.gameObject.CompareTag("Zaco"))
         {
             Instantiate(effect1, transform.position, Quaternion.identity);
         }

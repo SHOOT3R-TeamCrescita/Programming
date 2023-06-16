@@ -29,7 +29,7 @@ public class NoteManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !GameManager.isStop)
         {
             if (!isCheck)
-                noteCombo-=3;
+                noteCombo--;
                 //isClick = false;
             else if (isCheck)
                 noteCombo++;

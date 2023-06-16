@@ -128,5 +128,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isColor: 0
-  effect: {fileID: 3153900656919139227, guid: 9c3ef0f4d7dcb4c419cb8577e5875b63, type: 3}
-  effect1: {fileID: 3153900656919139227, guid: 340e9c4dddbc56147a1f0e89242f9304, type: 3}
+  effect: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
+  effect1: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
