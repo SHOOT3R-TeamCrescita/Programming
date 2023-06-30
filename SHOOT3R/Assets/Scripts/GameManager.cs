@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -23,10 +24,11 @@ public class GameManager : MonoBehaviour
     //ÀÏ½ÃÁ¤Áö
     [SerializeField] GameObject Pause;
 
+    [SerializeField] GameObject SettingUI;
+
     //ÄÆ¾À
     [SerializeField] GameObject CutScene;
     [SerializeField] GameObject MainUI; //ÀüÃ¼ UI
-
 
     public GameObject Player;
     public GameObject Boss;
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     public static float stoptime;
 
+    [SerializeField] AudioSource Click;
 
     void Awake()
     {
@@ -46,11 +49,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isStop = false;
-        towercount = 0;
-        stoptime = 1;
-        Time.timeScale = 1;
-        NoteManager.noteCombo = 0;
+        if (GameObject.Find("Tutorial") == null)
+        {
+            isStop = false;
+            towercount = 0;
+            stoptime = 1;
+            Time.timeScale = 1;
+            NoteManager.noteCombo = 0;
+        }
     }
 
     // Update is called once per frame
@@ -67,6 +73,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine("StopCO");
                 Player.GetComponent<playerMove>().anim.SetTrigger("isDie");
                 justCheck = false;
+                noteCreater.GetComponent<NoteCreater>().music.Pause();
                 failedAni.SetActive(true);
             }
         }
@@ -105,10 +112,14 @@ public class GameManager : MonoBehaviour
         }
 
         CheckLife();
+
+        StatManager.Timer += Time.deltaTime;
+        //Debug.Log(StatManager.Timer);
     }
 
     public void Continue()
     {
+        Click.Play();
         noteCreater.GetComponent<NoteCreater>().music.Play();
         isStop = false;
         Pause.SetActive(false);
@@ -119,10 +130,32 @@ public class GameManager : MonoBehaviour
 
     public void Exit()
     {
+        Click.Play();
         Init();
         //life[StatManager.Contuinue].color = new Color(1, 0, 0, 1);
         isStop = false;
         Loading.LoadScene(0,3.0f);
+    }
+
+    public void Setting()
+    {
+        Click.Play();
+        SettingUI.SetActive(true);
+    }
+
+    public void SettingExit()
+    {
+        Click.Play();
+        SettingUI.SetActive(false);
+    }
+
+    public void ExittoScore()
+    {
+        Click.Play();
+        Init();
+        //life[StatManager.Contuinue].color = new Color(1, 0, 0, 1);
+        isStop = false;
+        Loading.LoadScene(0, 3.0f);
     }
 
     /*public void Restart()
@@ -150,10 +183,10 @@ public class GameManager : MonoBehaviour
         switch(noteCreater.GetComponent<NoteCreater>().stageCheck)
         {
             case 1f:
-                Loading.LoadScene(2, 1.5f);
+                Loading.LoadScene(1, 1.5f);
                 break;
             case 1.5f:
-                Loading.LoadScene(2, 1.5f);
+                Loading.LoadScene(1, 1.5f);
                 break;
             default:
                 Debug.Log("Ã¼Å©!");
@@ -203,5 +236,8 @@ public class GameManager : MonoBehaviour
         StatManager.Contuinue = 3;
         StatManager.PLcurHP = Player.GetComponent<playerHP>().MaxHP;
         StatManager.curNoteCombo = 0;
+        StatManager.score = 0;
+        StatManager.Timer = 0;
+        StatManager.CheckTimer = 0;
     }
 }

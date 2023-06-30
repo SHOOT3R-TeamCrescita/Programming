@@ -27,6 +27,10 @@ public class ZacomobDefault : MonoBehaviour
 
     public GameObject[] Items;
 
+    public GameObject DeadEffect;
+
+    bool isCh = true;
+
     float x;
 
     void Awake()
@@ -34,6 +38,7 @@ public class ZacomobDefault : MonoBehaviour
         enemy = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        target = GameObject.Find("Player").transform;
     }
 
 
@@ -51,6 +56,8 @@ public class ZacomobDefault : MonoBehaviour
         }
         if (HP < 0)
         {
+            DeadEFF();
+            StatManager.score += 1f;
             StartCoroutine("Timer");
         }
 
@@ -159,6 +166,15 @@ public class ZacomobDefault : MonoBehaviour
         {
             //Debug.Log("¾å!!!");
             yield return null;
+        }
+    }
+
+    public void DeadEFF()
+    {
+        if (isCh)
+        {
+            Instantiate(DeadEffect, transform.position, Quaternion.Euler(0, 0, 0));
+            isCh = false;
         }
     }
 }

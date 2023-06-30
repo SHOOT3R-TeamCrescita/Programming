@@ -239,6 +239,7 @@ MonoBehaviour:
   isturn: 0
   anim: {fileID: 0}
   Items: []
+  DeadEffect: {fileID: 0}
 --- !u!195 &2498388601956504396
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -283,6 +284,7 @@ MonoBehaviour:
   isturn: 0
   anim: {fileID: 2498388601956504397}
   Items: []
+  DeadEffect: {fileID: 6790762367353528032, guid: eb8207cb4ba404d46a5dd305bfd16872, type: 3}
   ball: {fileID: 16471065957205041, guid: de3665b640d16574fbfd820ea74e0903, type: 3}
 --- !u!114 &-1126505636154366315
 MonoBehaviour:
@@ -306,7 +308,7 @@ AudioSource:
   m_GameObject: {fileID: 3345443226356823309}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1188248801716661982, guid: c14e94324adc53943aca2c88f9788a45, type: 2}
   m_audioClip: {fileID: 8300000, guid: a9194661e3a3fa94db5921531489550d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

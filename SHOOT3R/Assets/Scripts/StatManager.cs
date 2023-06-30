@@ -7,6 +7,13 @@ public class StatManager : MonoBehaviour
     public static float PLcurHP;
     public static int curNoteCombo;
     public static int Contuinue;
+    public static float score = 0;
+    public static float TotalScore = 0;
+    public static string Name;
+    public static float Timer = 0;
+    public static float CheckTimer;
+
+    public static float HighScore; //공모전 임시
 
     private void Awake()
     {

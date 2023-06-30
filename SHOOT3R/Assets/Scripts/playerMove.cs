@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class playerMove : MonoBehaviour
 {
@@ -46,7 +47,8 @@ public class playerMove : MonoBehaviour
     public GameObject model;
 
     public GameObject Check;
-    public GameObject DashUI;
+    public Image DashUI;
+    float DashTimer = 2.5f;
 
     public Animator anim;
 
@@ -74,6 +76,8 @@ public class playerMove : MonoBehaviour
     {
         SpawnBullet();
         PlayerMove();
+
+        DashUI.fillAmount = DashTimer / 2.5f;
     }
 
     void FixedUpdate()
@@ -181,7 +185,8 @@ public class playerMove : MonoBehaviour
             //Debug.Log("대쉬 가능!");
             SFXPlayer.SfxPlay(SFX_Player.Sfx.dash);
             isDash = false;
-            DashUI.SetActive(false);
+            DashTimer = 0;
+            //DashUI.SetActive(false);
             anim.SetTrigger("isDash");
             if (h == 0 && v == 0)
                 rigid.AddForce(orientation.forward * 800f * 250f, ForceMode.Force);
@@ -214,9 +219,10 @@ public class playerMove : MonoBehaviour
         while(WaitTime > 0f)
         {
             WaitTime -= Time.deltaTime;
+            DashTimer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
         isDash = true;
-        DashUI.SetActive(true);
+        //DashUI.SetActive(true);
     }
 }

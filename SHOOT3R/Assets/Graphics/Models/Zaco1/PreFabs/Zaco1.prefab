@@ -452,6 +452,7 @@ MonoBehaviour:
   isturn: 0
   anim: {fileID: 0}
   Items: []
+  DeadEffect: {fileID: 0}
 --- !u!114 &7820139441956133416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +476,7 @@ MonoBehaviour:
   anim: {fileID: 7820139441956133417}
   Items:
   - {fileID: 1849517013786010338, guid: 6220dfb61e93ea8499837c095d2e4740, type: 3}
+  DeadEffect: {fileID: 6790762367353528032, guid: eb8207cb4ba404d46a5dd305bfd16872, type: 3}
   ball: {fileID: 16471065957205041, guid: b28dc93dd724344479c003c79da0a995, type: 3}
   shootinpoint: {fileID: 7820139441300416934}
 --- !u!114 &-2570852754766456829
@@ -499,7 +501,7 @@ AudioSource:
   m_GameObject: {fileID: 6937758607944626920}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1188248801716661982, guid: c14e94324adc53943aca2c88f9788a45, type: 2}
   m_audioClip: {fileID: 8300000, guid: a9194661e3a3fa94db5921531489550d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

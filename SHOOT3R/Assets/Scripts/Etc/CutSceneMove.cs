@@ -34,6 +34,6 @@ public class CutSceneMove : MonoBehaviour
             Fade.color = new Color(0, 0, 0, fadeCount);
         }
         isEnd = false;
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(2);
     }
 }

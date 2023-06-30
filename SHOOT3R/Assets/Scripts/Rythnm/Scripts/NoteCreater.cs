@@ -24,7 +24,7 @@ public class NoteCreater : MonoBehaviour
     [SerializeField] private Intervals[] _intervals;
 
     public bool isTe;
-    public TextMeshProUGUI NC;
+    //public TextMeshProUGUI NC;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class NoteCreater : MonoBehaviour
     {
         //currentTime += Time.deltaTime;
         //NC.text = noteCount.ToString();
-        NC.text = StatManager.Contuinue.ToString();
+        //NC.text = StatManager.Contuinue.ToString();
 
         foreach (Intervals interval in _intervals)
         {

@@ -11,11 +11,17 @@ public class NoteMove : MonoBehaviour
     bool isCheck;
     bool isDie = true;
 
+    [SerializeField] GameObject Eff;
+
+    CircleCollider2D coll;
+
     void Start()
     {
         direction = Vector3.right;
 
         anim = GetComponent<Animator>();
+
+        coll = GetComponent<CircleCollider2D>();
 
         //isClick = NoteManager.isClick;
     }
@@ -26,9 +32,10 @@ public class NoteMove : MonoBehaviour
         if (isDie)
             transform.position += direction * NoteCreater.noteSpeed * Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && isCheck && !GameManager.isStop)
+        if (Input.GetMouseButtonDown(0) && isCheck && !GameManager.isStop && isDie)
         {
             isDie = false;
+            coll.enabled = false;
             anim.SetTrigger("isNote");
         }
     }
@@ -51,6 +58,12 @@ public class NoteMove : MonoBehaviour
             anim.SetBool("isStart", true);
     }
 
+    /*private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Check")&&)
+            isCheck = false;
+    }*/
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Check"))
@@ -63,8 +76,13 @@ public class NoteMove : MonoBehaviour
             //NoteManager.isDie = false;
     }
 
-    public void NoteDestroy() 
-    { 
+    public void NoteEff() 
+    {
+        Instantiate(Eff,gameObject.transform);
+    }
+
+    public void NoteDestroy()
+    {
         Destroy(gameObject);
     }
 }

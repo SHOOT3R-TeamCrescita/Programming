@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: -6488232747626735844}
-  Eff: {fileID: 1750917095662890509, guid: b1f456dbe60be914181ee39f8d21172c, type: 3}
+  Eff: {fileID: 9207362849971964141, guid: c0a2158368cd87641b0e48bbd2789b23, type: 3}
 --- !u!95 &-6488232747626735844
 Animator:
   serializedVersion: 4

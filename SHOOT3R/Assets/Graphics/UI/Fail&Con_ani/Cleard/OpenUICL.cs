@@ -17,7 +17,9 @@ public class OpenUICL : MonoBehaviour
         Player.SetActive(false);
         Boss.SetActive(false);
         ClearObj.SetActive(true);
+        //GameObject.Find("NoteCreater").GetComponent<NoteCreater>().music.Pause();
 
+        StatManager.CheckTimer = StatManager.Timer;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
